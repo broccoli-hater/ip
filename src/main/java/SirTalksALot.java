@@ -1,17 +1,26 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SirTalksALot {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        ArrayList<String> text = new ArrayList<>();
 
         System.out.println("____________________________________________________________");
         greeting();
         System.out.println("____________________________________________________________");
 
+        int counter = 1;
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
             System.out.println("____________________________________________________________");
-            System.out.println(input);
+            if (input.equals("list")) {
+                text.forEach(System.out::println);
+            } else {
+                System.out.println("added: " + input);
+                text.add(counter + ". " + input);
+                counter++;
+            }
             System.out.println("____________________________________________________________");
             input = scanner.nextLine();
         }
