@@ -94,6 +94,10 @@ public class SirTalksALot {
 
             switch (input[0]) {
                 case "list" -> {
+                    if (taskList.isEmpty()) {
+                        countTask(0);
+                        break;
+                    }
                     System.out.println("Hear ye! These are the tasks upon thy list, as decreed by thine own hand:");
                     String s = "";
                     int counter = 1;
@@ -107,12 +111,29 @@ public class SirTalksALot {
                         System.out.println(s);
                     }
                 }
+                case "delete" -> {
+                    try {
+                        int index = Integer.parseInt(input[1]) - 1;
+                        String completion = "";
+                        if (taskList.get(index).completed) {
+                            completion = "[X]";
+                        } else {
+                            completion = "[ ]";
+                        }
+                        System.out.println("Noted, then. I have seen fit to remove this trivial task.");
+                        System.out.println(taskList.get(index).getType() + completion + " " + taskList.get(index).getName());
+                        taskList.remove(index);
+                        countTask(taskList.size());
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    }
+                }
                 case "mark" -> {
                     try {
                         int index = Integer.parseInt(input[1]) - 1;
                         taskList.get(index).markCompleted();
                         System.out.println("Behold! A task completed! A most noble accomplishment.");
-                        System.out.println("[X] " + taskList.get(index).getName());
+                        System.out.println(taskList.get(index).getType() + "[X] " + taskList.get(index).getName());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
                     }
@@ -122,7 +143,7 @@ public class SirTalksALot {
                         int index = Integer.parseInt(input[1]) - 1;
                         taskList.get(index).unmarkCompleted();
                         System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
-                        System.out.println("[ ] " + taskList.get(index).getName());
+                        System.out.println(taskList.get(index).getType() + "[ ] " + taskList.get(index).getName());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
                     }
@@ -205,10 +226,13 @@ public class SirTalksALot {
     }
     public static void countTask(int count) {
         String countTask = "";
-        if (count == 1) {
+        if (count == 0) {
+            countTask = "Thou hast " + count + " tasks upon the list.";
+        } else if (count == 1) {
             countTask = "Thou hast " + count + " task upon the list. A worthy pursuit!";
         } else {
             countTask = "Thou hast " + count + " tasks upon the list, each one a worthy pursuit!";
+
         }
         System.out.println(countTask);
     }

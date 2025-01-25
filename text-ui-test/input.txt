@@ -1,3 +1,4 @@
+list
 todo read book
 deadline cs2103 ip /by Friday
 event mosaic /from April 5th 12pm /to 4pm
@@ -19,6 +20,9 @@ list
 mark 3
 mark 4
 mark 5
+delete
+delete 5
+delete 9
 list
 unmark 4
 list

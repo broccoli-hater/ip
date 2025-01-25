@@ -6,6 +6,9 @@ Very well, I shall indulge thee in thy request.
 Speak now, peasant, What dost thou seek from a knight of my stature?
 ____________________________________________________________
 ____________________________________________________________
+Thou hast 0 tasks upon the list.
+____________________________________________________________
+____________________________________________________________
 Verily, I have inscribed this task upon the list.
 Let no task go unfulfilled and no duty unrecorded!
     [T][ ] read book
@@ -31,7 +34,7 @@ Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
 ____________________________________________________________
 ____________________________________________________________
 Behold! A task completed! A most noble accomplishment.
-[X] read book
+[T][X] read book
 ____________________________________________________________
 ____________________________________________________________
 Verily, I have inscribed this task upon the list.
@@ -93,15 +96,26 @@ Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
 ____________________________________________________________
 ____________________________________________________________
 Behold! A task completed! A most noble accomplishment.
-[X] mosaic
+[E][X] mosaic
 ____________________________________________________________
 ____________________________________________________________
 Behold! A task completed! A most noble accomplishment.
-[X] sleep
+[T][X] sleep
 ____________________________________________________________
 ____________________________________________________________
 Behold! A task completed! A most noble accomplishment.
-[X] cs3240 presentation
+[D][X] cs3240 presentation
+____________________________________________________________
+____________________________________________________________
+It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.
+____________________________________________________________
+____________________________________________________________
+Noted, then. I have seen fit to remove this trivial task.
+[D][X] cs3240 presentation
+Thou hast 5 tasks upon the list, each one a worthy pursuit!
+____________________________________________________________
+____________________________________________________________
+It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.
 ____________________________________________________________
 ____________________________________________________________
 Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
@@ -109,12 +123,11 @@ Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
 2.[D][ ] cs2103 ip (by: Friday)
 3.[E][X] mosaic (from: April 5th 12pm, to: 4pm)
 4.[T][X] sleep 
-5.[D][X] cs3240 presentation (by: Wednesday)
-6.[E][ ] go to the gym (from: 8pm, to: 9pm)
+5.[E][ ] go to the gym (from: 8pm, to: 9pm)
 ____________________________________________________________
 ____________________________________________________________
 Alas, a task left to be conquered. Its time has not yet come to pass.
-[ ] sleep
+[T][ ] sleep
 ____________________________________________________________
 ____________________________________________________________
 Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
@@ -122,8 +135,7 @@ Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
 2.[D][ ] cs2103 ip (by: Friday)
 3.[E][X] mosaic (from: April 5th 12pm, to: 4pm)
 4.[T][ ] sleep 
-5.[D][X] cs3240 presentation (by: Wednesday)
-6.[E][ ] go to the gym (from: 8pm, to: 9pm)
+5.[E][ ] go to the gym (from: 8pm, to: 9pm)
 ____________________________________________________________
 ____________________________________________________________
 Hah! A quick departure, is it? Very well, then. 
