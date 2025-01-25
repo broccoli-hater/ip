@@ -108,37 +108,78 @@ public class SirTalksALot {
                     }
                 }
                 case "mark" -> {
-                    System.out.println("Behold! A task completed! A most noble accomplishment.");
-                    int index = Integer.parseInt(input[1]) - 1;
-                    taskList.get(index).markCompleted();
-                    System.out.println("[X] " + taskList.get(index).getName());
+                    try {
+                        int index = Integer.parseInt(input[1]) - 1;
+                        taskList.get(index).markCompleted();
+                        System.out.println("Behold! A task completed! A most noble accomplishment.");
+                        System.out.println("[X] " + taskList.get(index).getName());
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    }
                 }
                 case "unmark" -> {
-                    System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
-                    int index = Integer.parseInt(input[1]) - 1;
-                    taskList.get(index).unmarkCompleted();
-                    System.out.println("[ ] " + taskList.get(index).getName());
+                    try {
+                        int index = Integer.parseInt(input[1]) - 1;
+                        taskList.get(index).unmarkCompleted();
+                        System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
+                        System.out.println("[ ] " + taskList.get(index).getName());
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    }
                 }
                 case "todo" -> {
-                    String todo = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
-                    addTask();
-                    taskList.add(new ToDo(todo));
-                    System.out.println("    [T][ ] " + taskList.get(taskList.size() - 1).getName());
-                    countTask(taskList.size());
+                    if (input.length == 1) {
+                        System.out.println("The description of the todo cannot be left empty, for how would one know what is to be done?");
+                        break;
+                    } else {
+                        String todo = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
+                        addTask();
+                        taskList.add(new ToDo(todo));
+                        System.out.println("    [T][ ] " + taskList.get(taskList.size() - 1).getName());
+                        countTask(taskList.size());
+                    }
                 }
                 case "deadline" -> {
+                    if (input.length == 1) {
+                        System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                        break;
+                    }
                     String deadLine = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
                     String[] temp = deadLine.split(" /by ", 2);
-
+                    if (deadLine.startsWith("/by") && temp.length == 1) {
+                        System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                        break;
+                    }
+                    if (temp.length == 1) {
+                        System.out.println("The deadline cannot be left empty, for how would one know when the task is to be done?");
+                        break;
+                    }
                     addTask();
                     taskList.add(new DeadLine(temp[0], temp[1]));
                     System.out.println("    [D][ ] " + taskList.get(taskList.size() - 1).getName() + " (by: " + temp[1] + ")");
                     countTask(taskList.size());
                 }
                 case "event" -> {
+                    if (input.length == 1) {
+                        System.out.println("The description of the event cannot be left empty, for how would one know what is to be done?");
+                        break;
+                    }
                     String event= String.join(" ", Arrays.copyOfRange(input, 1, input.length));
+
                     String[] temp = event.split(" /from ", 2);
+                    if (event.startsWith("/from") && temp.length == 1) {
+                        System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                        break;
+                    }
+                    if (temp.length == 1) {
+                        System.out.println("The start time of the event cannot be left empty, for how would one know when the event is?");
+                        break;
+                    }
                     String[] temp1 = temp[1].split(" /to ", 2);
+                    if (temp1.length == 1) {
+                        System.out.println("The end time of the event cannot be left empty, for how would one know when the event concludes?");
+                        break;
+                    }
 
                     addTask();
                     taskList.add(new Event(temp[0], temp1[0], temp1[1]));
@@ -146,10 +187,7 @@ public class SirTalksALot {
                     countTask(taskList.size());
                 }
                 default -> {
-                    String task = String.join(" ", Arrays.copyOfRange(input, 0, input.length));
-                    addTask();
-                    System.out.println(task);
-                    taskList.add(new Task(task));
+                    System.out.println("Speak clearly! I know not what such words mean. Attempt once more.");
                 }
             }
             System.out.println("____________________________________________________________");

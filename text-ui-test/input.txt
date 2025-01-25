@@ -5,7 +5,15 @@ list
 mark 1
 todo sleep
 list
+deadline
+deadline cs3240 presentation
+deadline /by Wednesday
 deadline cs3240 presentation /by Wednesday
+event
+event go to the gym
+event go to the gym /from 8pm
+event go to the gym /to 9pm
+event /from 8pm /to 9pm
 event go to the gym /from 8pm /to 9pm
 list
 mark 3

@@ -38,21 +38,45 @@ Verily, I have inscribed this task upon the list.
 Let no task go unfulfilled and no duty unrecorded!
     [T][ ] sleep
 Thou hast 4 tasks upon the list, each one a worthy pursuit!
-------------------------------------------------------------
-------------------------------------------------------------
+____________________________________________________________
+____________________________________________________________
 Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
 1.[T][X] read book 
 2.[D][ ] cs2103 ip (by: Friday)
 3.[E][ ] mosaic (from: April 5th 12pm, to: 4pm)
 4.[T][ ] sleep 
-------------------------------------------------------------
-------------------------------------------------------------
+____________________________________________________________
+____________________________________________________________
+The description of the deadline cannot be left empty, for how would one know what is to be done?
+____________________________________________________________
+____________________________________________________________
+The deadline cannot be left empty, for how would one know when the task is to be done?
+____________________________________________________________
+____________________________________________________________
+The description of the deadline cannot be left empty, for how would one know what is to be done?
+____________________________________________________________
+____________________________________________________________
 Verily, I have inscribed this task upon the list.
 Let no task go unfulfilled and no duty unrecorded!
     [D][ ] cs3240 presentation (by: Wednesday)
 Thou hast 5 tasks upon the list, each one a worthy pursuit!
-------------------------------------------------------------
-------------------------------------------------------------
+____________________________________________________________
+____________________________________________________________
+The description of the event cannot be left empty, for how would one know what is to be done?
+____________________________________________________________
+____________________________________________________________
+The start time of the event cannot be left empty, for how would one know when the event is?
+____________________________________________________________
+____________________________________________________________
+The end time of the event cannot be left empty, for how would one know when the event concludes?
+____________________________________________________________
+____________________________________________________________
+The start time of the event cannot be left empty, for how would one know when the event is?
+____________________________________________________________
+____________________________________________________________
+The description of the deadline cannot be left empty, for how would one know what is to be done?
+____________________________________________________________
+____________________________________________________________
 Verily, I have inscribed this task upon the list.
 Let no task go unfulfilled and no duty unrecorded!
     [E][ ] go to the gym (from: 8pm to: 9pm)
