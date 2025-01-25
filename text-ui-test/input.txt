@@ -1,0 +1,17 @@
+todo read book
+deadline cs2103 ip /by Friday
+event mosaic /from April 5th 12pm /to 4pm
+list
+mark 1
+todo sleep
+list
+deadline cs3240 presentation /by Wednesday
+event go to the gym /from 8pm /to 9pm
+list
+mark 3
+mark 4
+mark 5
+list
+unmark 4
+list
+bye

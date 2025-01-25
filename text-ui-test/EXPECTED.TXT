@@ -1,7 +1,107 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+____________________________________________________________
+Greetings! It is I, Sir Talks-A-Lot. 
+Ah, so you wish to converse with one such as myself? 
+A noble knight, sworn to honor and valor, holder of great wisdom and unyielding strength? 
+Very well, I shall indulge thee in thy request. 
+Speak now, peasant, What dost thou seek from a knight of my stature?
+____________________________________________________________
+____________________________________________________________
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [T][ ] read book
+Thou hast 1 task upon the list. A worthy pursuit!
+____________________________________________________________
+____________________________________________________________
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [D][ ] cs2103 ip (by: Friday)
+Thou hast 2 tasks upon the list, each one a worthy pursuit!
+____________________________________________________________
+____________________________________________________________
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [E][ ] mosaic (from: April 5th 12pm to: 4pm)
+Thou hast 3 tasks upon the list, each one a worthy pursuit!
+____________________________________________________________
+____________________________________________________________
+Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
+1.[T][ ] read book 
+2.[D][ ] cs2103 ip (by: Friday)
+3.[E][ ] mosaic (from: April 5th 12pm, to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Behold! A task completed! A most noble accomplishment.
+[X] read book
+____________________________________________________________
+____________________________________________________________
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [T][ ] sleep
+Thou hast 4 tasks upon the list, each one a worthy pursuit!
+------------------------------------------------------------
+------------------------------------------------------------
+Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
+1.[T][X] read book 
+2.[D][ ] cs2103 ip (by: Friday)
+3.[E][ ] mosaic (from: April 5th 12pm, to: 4pm)
+4.[T][ ] sleep 
+------------------------------------------------------------
+------------------------------------------------------------
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [D][ ] cs3240 presentation (by: Wednesday)
+Thou hast 5 tasks upon the list, each one a worthy pursuit!
+------------------------------------------------------------
+------------------------------------------------------------
+Verily, I have inscribed this task upon the list.
+Let no task go unfulfilled and no duty unrecorded!
+    [E][ ] go to the gym (from: 8pm to: 9pm)
+Thou hast 6 tasks upon the list, each one a worthy pursuit!
+____________________________________________________________
+____________________________________________________________
+Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
+1.[T][X] read book 
+2.[D][ ] cs2103 ip (by: Friday)
+3.[E][ ] mosaic (from: April 5th 12pm, to: 4pm)
+4.[T][ ] sleep 
+5.[D][ ] cs3240 presentation (by: Wednesday)
+6.[E][ ] go to the gym (from: 8pm, to: 9pm)
+____________________________________________________________
+____________________________________________________________
+Behold! A task completed! A most noble accomplishment.
+[X] mosaic
+____________________________________________________________
+____________________________________________________________
+Behold! A task completed! A most noble accomplishment.
+[X] sleep
+____________________________________________________________
+____________________________________________________________
+Behold! A task completed! A most noble accomplishment.
+[X] cs3240 presentation
+____________________________________________________________
+____________________________________________________________
+Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
+1.[T][X] read book 
+2.[D][ ] cs2103 ip (by: Friday)
+3.[E][X] mosaic (from: April 5th 12pm, to: 4pm)
+4.[T][X] sleep 
+5.[D][X] cs3240 presentation (by: Wednesday)
+6.[E][ ] go to the gym (from: 8pm, to: 9pm)
+____________________________________________________________
+____________________________________________________________
+Alas, a task left to be conquered. Its time has not yet come to pass.
+[ ] sleep
+____________________________________________________________
+____________________________________________________________
+Hear ye! These are the tasks upon thy list, as decreed by thine own hand:
+1.[T][X] read book 
+2.[D][ ] cs2103 ip (by: Friday)
+3.[E][X] mosaic (from: April 5th 12pm, to: 4pm)
+4.[T][ ] sleep 
+5.[D][X] cs3240 presentation (by: Wednesday)
+6.[E][ ] go to the gym (from: 8pm, to: 9pm)
+____________________________________________________________
+____________________________________________________________
+Hah! A quick departure, is it? Very well, then. 
+Farewell for now.
+____________________________________________________________

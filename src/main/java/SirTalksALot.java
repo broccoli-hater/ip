@@ -155,6 +155,7 @@ public class SirTalksALot {
             System.out.println("____________________________________________________________");
             input = scanner.nextLine().split(" ");
         }
+        System.out.println("____________________________________________________________");
         farewell();
         System.out.println("____________________________________________________________");
     }
