@@ -19,7 +19,7 @@ class Task {
     }
 
     public String isComplete() {
-        return isComplete ? "[X]" : "[ ]";
+        return isComplete ? "[X]" : "[-]";
     }
 
     public void markCompleted() {
@@ -102,7 +102,9 @@ public class SirTalksALot {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> taskList = new ArrayList<>();
+        ArrayList<Task> taskList;
+
+        taskList = loadData();
 
         System.out.println("____________________________________________________________");
         sayHello();
@@ -144,6 +146,7 @@ public class SirTalksALot {
                 try {
                     int index = Integer.parseInt(input[1]) - 1;
                     taskList.get(index).markCompleted();
+                    saveData(taskList);
                     System.out.println("Behold! A task completed! A most noble accomplishment.");
                     System.out.println(taskList.get(index).getType() + "[X] " + taskList.get(index).getName());
                 } catch (IndexOutOfBoundsException e) {
@@ -154,6 +157,7 @@ public class SirTalksALot {
                 try {
                     int index = Integer.parseInt(input[1]) - 1;
                     taskList.get(index).unmarkCompleted();
+                    saveData(taskList);
                     System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
                     System.out.println(taskList.get(index).getType() + "[ ] " + taskList.get(index).getName());
                 } catch (IndexOutOfBoundsException e) {
@@ -170,7 +174,7 @@ public class SirTalksALot {
                     addTask();
                     taskList.add(new ToDo(todo));
                     saveData(taskList);
-                    System.out.println("    [T][ ] " + taskList.get(taskList.size() - 1).getName());
+                    System.out.println("    [T][-] " + taskList.get(taskList.size() - 1).getName());
                     countTask(taskList.size());
                 }
             }
@@ -193,7 +197,7 @@ public class SirTalksALot {
                 addTask();
                 taskList.add(new DeadLine(temp[0], temp[1]));
                 saveData(taskList);
-                System.out.println("    [D][ ] " + taskList.get(taskList.size() - 1).getName() + " (by: " + temp[1] + ")");
+                System.out.println("    [D][-] " + taskList.get(taskList.size() - 1).getName() + " (by: " + temp[1] + ")");
                 countTask(taskList.size());
             }
             case "event" -> {
@@ -221,7 +225,7 @@ public class SirTalksALot {
                 addTask();
                 taskList.add(new Event(temp[0], temp1[0], temp1[1]));
                 saveData(taskList);
-                System.out.println("    [E][ ] " + taskList.get(taskList.size() - 1).getName() + " (from: " + temp1[0] + " to: " + temp1[1] + ")");
+                System.out.println("    [E][-] " + taskList.get(taskList.size() - 1).getName() + " (from: " + temp1[0] + " to: " + temp1[1] + ")");
                 countTask(taskList.size());
             }
             default -> {
@@ -253,7 +257,7 @@ public class SirTalksALot {
             FileWriter fw = new FileWriter(filename);
             for (Task task : taskList) {
                 String type = task.getType();
-                fw.write(type + task.isComplete() + " " + task.getName() + " " + task.toString() + "\n");
+                fw.write(type + " " + task.isComplete() + " " + task.getName() + " " + task.toString() + "\n");
             }
             fw.close();
 
@@ -262,10 +266,44 @@ public class SirTalksALot {
         }
     }
 
-    public static void loadData(){
-//        try {
-//            File f = new File("data/sirtalksalot.txt");
-//        }
+    public static ArrayList<Task> loadData(){
+        ArrayList<Task> taskList = new ArrayList<>();
+        try {
+            File f = new File("data/sirtalksalot.txt");
+            if (f.exists()) {
+                Scanner sc = new Scanner(f);
+                while (sc.hasNextLine()) {
+                    String[] task = sc.nextLine().split(" ");
+                    if (task[0].equals("[T]")){
+                        ToDo toDo = new ToDo(task[2]);
+                        if (task[1].equals("[X]")) {
+                            toDo.markCompleted();
+                        }
+                        taskList.add(toDo);
+                    } else if (task[0].equals("[D]")){
+                        String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
+                        String[] token1 = token.split(" \\(by: ", 2);
+                        DeadLine deadLine = new DeadLine(token1[0], token1[1].substring(0, token1[1].length() - 1));
+                        if (task[1].equals("[X]")) {
+                            deadLine.markCompleted();
+                        }
+                        taskList.add(deadLine);
+                    } else if (task[0].equals("[E]")){
+                        String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
+                        String[] token1 = token.split(" \\(from: ", 2);
+                        String[] token2 = token1[1].split(" to: ", 2);
+                        Event event = new Event(token1[0], token2[0], token2[1].substring(0, token2[1].length() - 1));
+                        if (task[1].equals("[X]")) {
+                            event.markCompleted();
+                        }
+                        taskList.add(event);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return taskList;
     }
 
     public static void addTask() {
