@@ -269,7 +269,9 @@ public class SirTalksALot {
     public static ArrayList<Task> loadData(){
         ArrayList<Task> taskList = new ArrayList<>();
         try {
-            File f = new File("data/sirtalksalot.txt");
+            String directory = "data";
+            String filename = directory + File.separator + "sirtalksalot.txt";
+            File f = new File(filename);
             if (f.exists()) {
                 Scanner sc = new Scanner(f);
                 while (sc.hasNextLine()) {
@@ -297,6 +299,8 @@ public class SirTalksALot {
                             event.markCompleted();
                         }
                         taskList.add(event);
+                    } else {
+                        System.out.println("Wrong file format!");
                     }
                 }
             }
