@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -14,8 +18,8 @@ class Task {
         return name;
     }
 
-    public boolean isComplete() {
-        return isComplete;
+    public String isComplete() {
+        return isComplete ? "[X]" : "[ ]";
     }
 
     public void markCompleted() {
@@ -91,7 +95,7 @@ class Event extends Task {
     }
 
     public String toString() {
-        return "(from: " + getStart() + ", to: " + getEnd() + ")";
+        return "(from: " + getStart() + " to: " + getEnd() + ")";
     }
 }
 public class SirTalksALot {
@@ -118,11 +122,7 @@ public class SirTalksALot {
                 String s = "";
                 int counter = 1;
                 for (Task task : taskList) {
-                    if (task.isComplete()) {
-                        s = counter + "." + task.getType() + "[X] " + task.getName() + " " + task.toString();
-                    } else {
-                        s = counter + "." + task.getType() + "[ ] " + task.getName() + " " + task.toString();
-                    }
+                    s = counter + "." + task.getType() + task.isComplete() + " " + task.getName() + " " + task.toString();
                     counter++;
                     System.out.println(s);
                 }
@@ -131,13 +131,9 @@ public class SirTalksALot {
                 try {
                     int index = Integer.parseInt(input[1]) - 1;
                     String completion = "";
-                    if (taskList.get(index).isComplete()) {
-                        completion = "[X]";
-                    } else {
-                        completion = "[ ]";
-                    }
+
                     System.out.println("Noted, then. I have seen fit to remove this trivial task.");
-                    System.out.println(taskList.get(index).getType() + completion + " " + taskList.get(index).getName());
+                    System.out.println(taskList.get(index).getType() + taskList.get(index).isComplete() + " " + taskList.get(index).getName());
                     taskList.remove(index);
                     countTask(taskList.size());
                 } catch (IndexOutOfBoundsException e) {
@@ -170,8 +166,10 @@ public class SirTalksALot {
                     break;
                 } else {
                     String todo = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
+
                     addTask();
                     taskList.add(new ToDo(todo));
+                    saveData(taskList);
                     System.out.println("    [T][ ] " + taskList.get(taskList.size() - 1).getName());
                     countTask(taskList.size());
                 }
@@ -191,8 +189,10 @@ public class SirTalksALot {
                     System.out.println("The deadline cannot be left empty, for how would one know when the task is to be done?");
                     break;
                 }
+
                 addTask();
                 taskList.add(new DeadLine(temp[0], temp[1]));
+                saveData(taskList);
                 System.out.println("    [D][ ] " + taskList.get(taskList.size() - 1).getName() + " (by: " + temp[1] + ")");
                 countTask(taskList.size());
             }
@@ -220,6 +220,7 @@ public class SirTalksALot {
 
                 addTask();
                 taskList.add(new Event(temp[0], temp1[0], temp1[1]));
+                saveData(taskList);
                 System.out.println("    [E][ ] " + taskList.get(taskList.size() - 1).getName() + " (from: " + temp1[0] + " to: " + temp1[1] + ")");
                 countTask(taskList.size());
             }
@@ -230,9 +231,41 @@ public class SirTalksALot {
             System.out.println("____________________________________________________________");
             input = scanner.nextLine().split(" ");
         }
+
         System.out.println("____________________________________________________________");
         sayBye();
+        saveData(taskList);
         System.out.println("____________________________________________________________");
+    }
+
+    public static void saveData(ArrayList<? extends Task> taskList) {
+        try {
+            String directory = "data";
+            String filename = directory + File.separator + "sirtalksalot.txt";
+            File d = new File(directory);
+            File f = new File(filename);
+
+            if (!f.exists()) {
+                d.mkdirs();
+                f.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(filename);
+            for (Task task : taskList) {
+                String type = task.getType();
+                fw.write(type + task.isComplete() + " " + task.getName() + " " + task.toString() + "\n");
+            }
+            fw.close();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void loadData(){
+//        try {
+//            File f = new File("data/sirtalksalot.txt");
+//        }
     }
 
     public static void addTask() {
@@ -249,7 +282,6 @@ public class SirTalksALot {
             countTask = "Thou hast " + count + " task upon the list. A worthy pursuit!";
         } else {
             countTask = "Thou hast " + count + " tasks upon the list, each one a worthy pursuit!";
-
         }
         System.out.println(countTask);
     }
