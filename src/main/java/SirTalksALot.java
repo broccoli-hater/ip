@@ -2,99 +2,99 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+class Task {
+    private String name;
+    private boolean isComplete = false;
+
+    public Task(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void markCompleted() {
+        isComplete = true;
+    }
+
+    public void unmarkCompleted() {
+        isComplete = false;
+    }
+
+    public String getType() {
+        return "[ ]";
+    }
+
+    public String toString() {
+        return "";
+    }
+
+}
+
+class ToDo extends Task {
+
+    public ToDo(String name) {
+        super(name);
+    }
+
+    public String getType() {
+        return "[T]";
+    }
+}
+
+class DeadLine extends Task {
+    private String deadLine;
+
+    public DeadLine(String name, String deadLine) {
+        super(name);
+        this.deadLine = deadLine;
+    }
+
+    public String getType() {
+        return "[D]";
+    }
+
+    public String getDeadLine() {
+        return deadLine;
+    }
+
+    public String toString() {
+        return "(by: " + getDeadLine() + ")";
+    }
+}
+
+class Event extends Task {
+    private String start;
+    private String end;
+
+    public Event(String name, String start, String end) {
+        super(name);
+        this.start = start;
+        this.end = end;
+    }
+
+    public String getType() {
+        return "[E]";
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public String toString() {
+        return "(from: " + getStart() + ", to: " + getEnd() + ")";
+    }
+}
 public class SirTalksALot {
-    public static class Task {
-        private String name;
-        private boolean isComplete = false;
-
-        public Task(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isComplete() {
-            return isComplete;
-        }
-
-        public void markCompleted() {
-            isComplete = true;
-        }
-
-        public void unmarkCompleted() {
-            isComplete = false;
-        }
-
-        public String getType() {
-            return "[ ]";
-        }
-
-        public String toString() {
-            return "";
-        }
-
-    }
-
-    public static class ToDo extends Task {
-
-        public ToDo(String name) {
-            super(name);
-        }
-
-        public String getType() {
-            return "[T]";
-        }
-    }
-
-    public static class DeadLine extends Task {
-        private String deadLine;
-
-        public DeadLine(String name, String deadLine) {
-            super(name);
-            this.deadLine = deadLine;
-        }
-
-        public String getType() {
-            return "[D]";
-        }
-
-        public String getDeadLine() {
-            return deadLine;
-        }
-
-        public String toString() {
-            return "(by: " + getDeadLine() + ")";
-        }
-    }
-
-    public static class Event extends Task {
-        private String start;
-        private String end;
-
-        public Event(String name, String start, String end) {
-            super(name);
-            this.start = start;
-            this.end = end;
-        }
-
-        public String getType() {
-            return "[E]";
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public String toString() {
-            return "(from: " + getStart() + ", to: " + getEnd() + ")";
-        }
-    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -118,7 +118,7 @@ public class SirTalksALot {
                 String s = "";
                 int counter = 1;
                 for (Task task : taskList) {
-                    if (task.isComplete) {
+                    if (task.isComplete()) {
                         s = counter + "." + task.getType() + "[X] " + task.getName() + " " + task.toString();
                     } else {
                         s = counter + "." + task.getType() + "[ ] " + task.getName() + " " + task.toString();
@@ -131,7 +131,7 @@ public class SirTalksALot {
                 try {
                     int index = Integer.parseInt(input[1]) - 1;
                     String completion = "";
-                    if (taskList.get(index).isComplete) {
+                    if (taskList.get(index).isComplete()) {
                         completion = "[X]";
                     } else {
                         completion = "[ ]";
