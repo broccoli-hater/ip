@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 class Task {
     private String name;
@@ -30,6 +33,18 @@ class Task {
         isComplete = false;
     }
 
+    public String getDeadLine() {
+        return "";
+    }
+
+    public String getStart() {
+        return "";
+    }
+
+    public String getEnd() {
+        return "";
+    }
+
     public String getType() {
         return "[ ]";
     }
@@ -41,7 +56,6 @@ class Task {
 }
 
 class ToDo extends Task {
-
     public ToDo(String name) {
         super(name);
     }
@@ -52,9 +66,9 @@ class ToDo extends Task {
 }
 
 class DeadLine extends Task {
-    private String deadLine;
+    private LocalDate deadLine;
 
-    public DeadLine(String name, String deadLine) {
+    public DeadLine(String name, LocalDate deadLine) {
         super(name);
         this.deadLine = deadLine;
     }
@@ -64,7 +78,7 @@ class DeadLine extends Task {
     }
 
     public String getDeadLine() {
-        return deadLine;
+        return deadLine.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String toString() {
@@ -73,10 +87,10 @@ class DeadLine extends Task {
 }
 
 class Event extends Task {
-    private String start;
-    private String end;
+    private LocalDate start;
+    private LocalDate end;
 
-    public Event(String name, String start, String end) {
+    public Event(String name, LocalDate start, LocalDate end) {
         super(name);
         this.start = start;
         this.end = end;
@@ -87,19 +101,19 @@ class Event extends Task {
     }
 
     public String getStart() {
-        return start;
+        return start.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getEnd() {
-        return end;
+        return end.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String toString() {
         return "(from: " + getStart() + " to: " + getEnd() + ")";
     }
 }
-public class SirTalksALot {
 
+public class SirTalksALot {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> taskList;
@@ -137,6 +151,7 @@ public class SirTalksALot {
                     System.out.println("Noted, then. I have seen fit to remove this trivial task.");
                     System.out.println(taskList.get(index).getType() + taskList.get(index).isComplete() + " " + taskList.get(index).getName());
                     taskList.remove(index);
+                    saveData(taskList);
                     countTask(taskList.size());
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
@@ -195,9 +210,10 @@ public class SirTalksALot {
                 }
 
                 addTask();
-                taskList.add(new DeadLine(temp[0], temp[1]));
+                taskList.add(new DeadLine(temp[0], LocalDate.parse(temp[1])));
                 saveData(taskList);
-                System.out.println("    [D][-] " + taskList.get(taskList.size() - 1).getName() + " (by: " + temp[1] + ")");
+                System.out.println("    [D][-] " + taskList.get(taskList.size() - 1).getName()
+                        + " (by: " + taskList.get(taskList.size() - 1).getDeadLine() + ")");
                 countTask(taskList.size());
             }
             case "event" -> {
@@ -223,7 +239,7 @@ public class SirTalksALot {
                 }
 
                 addTask();
-                taskList.add(new Event(temp[0], temp1[0], temp1[1]));
+                taskList.add(new Event(temp[0], LocalDate.parse(temp1[0]), LocalDate.parse(temp1[1])));
                 saveData(taskList);
                 System.out.println("    [E][-] " + taskList.get(taskList.size() - 1).getName() + " (from: " + temp1[0] + " to: " + temp1[1] + ")");
                 countTask(taskList.size());
@@ -266,7 +282,7 @@ public class SirTalksALot {
         }
     }
 
-    public static ArrayList<Task> loadData(){
+    public static ArrayList<Task> loadData() {
         ArrayList<Task> taskList = new ArrayList<>();
         try {
             String directory = "data";
@@ -276,31 +292,39 @@ public class SirTalksALot {
                 Scanner sc = new Scanner(f);
                 while (sc.hasNextLine()) {
                     String[] task = sc.nextLine().split(" ");
-                    if (task[0].equals("[T]")){
+                    switch (task[0]) {
+                    case "[T]" -> {
                         ToDo toDo = new ToDo(task[2]);
                         if (task[1].equals("[X]")) {
                             toDo.markCompleted();
                         }
                         taskList.add(toDo);
-                    } else if (task[0].equals("[D]")){
+                    }
+                    case "[D]" -> {
                         String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
                         String[] token1 = token.split(" \\(by: ", 2);
-                        DeadLine deadLine = new DeadLine(token1[0], token1[1].substring(0, token1[1].length() - 1));
+                        DeadLine deadLine = new DeadLine(token1[0],
+                                LocalDate.parse(token1[1].substring(0, token1[1].length() - 1),
+                                        DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                         if (task[1].equals("[X]")) {
                             deadLine.markCompleted();
                         }
                         taskList.add(deadLine);
-                    } else if (task[0].equals("[E]")){
+                    }
+                    case "[E]" -> {
                         String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
                         String[] token1 = token.split(" \\(from: ", 2);
                         String[] token2 = token1[1].split(" to: ", 2);
-                        Event event = new Event(token1[0], token2[0], token2[1].substring(0, token2[1].length() - 1));
+                        Event event = new Event(token1[0],
+                                LocalDate.parse(token2[0], DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                                LocalDate.parse(token2[1].substring(0, token2[1].length() - 1),
+                                        DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                         if (task[1].equals("[X]")) {
                             event.markCompleted();
                         }
                         taskList.add(event);
-                    } else {
-                        System.out.println("Wrong file format!");
+                    }
+                    default -> System.out.println("Wrong file format!");
                     }
                 }
             }
