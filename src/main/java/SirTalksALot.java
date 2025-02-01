@@ -115,13 +115,11 @@ class Event extends Task {
 }
 
 public class SirTalksALot {
-    private Ui ui;
     private Storage storage;
     private Parser parser;
     private TaskList taskList;
 
     public SirTalksALot(String filePath) {
-        ui = new Ui();
         storage = new Storage(filePath);
         taskList = new TaskList(storage.loadData());
     }
@@ -135,6 +133,7 @@ public class SirTalksALot {
         Ui.breakLine();
 
         String[] input = scanner.nextLine().split(" ");
+
         while (!input[0].equals("bye")) {
             Ui.breakLine();
 
@@ -142,29 +141,19 @@ public class SirTalksALot {
             case "list" -> {
                 if (taskList.isEmpty()) {
                     Ui.countTask(0);
-                    break;
-                }
-                System.out.println("Hear ye! These are the tasks upon thy list, as decreed by thine own hand:");
-                String s = "";
-                int counter = 1;
-                for (Task task : taskList) {
-                    s = counter + "." + task.getType() + task.isComplete() + " " + task.getName() + " " + task.toString();
-                    counter++;
-                    System.out.println(s);
+                } else {
+                    Ui.printList(taskList);
                 }
             }
             case "delete" -> {
                 try {
                     int index = Integer.parseInt(input[1]) - 1;
-                    String completion = "";
-
-                    System.out.println("Noted, then. I have seen fit to remove this trivial task.");
-                    System.out.println(taskList.get(index).getType() + taskList.get(index).isComplete() + " " + taskList.get(index).getName());
+                    Ui.deleteTask(taskList.get(index));
                     taskList.remove(index);
                     storage.saveData(taskList);
                     Ui.countTask(taskList.size());
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    Ui.taskNotFound();
                 }
             }
             case "mark" -> {
@@ -172,10 +161,9 @@ public class SirTalksALot {
                     int index = Integer.parseInt(input[1]) - 1;
                     taskList.get(index).markCompleted();
                     storage.saveData(taskList);
-                    System.out.println("Behold! A task completed! A most noble accomplishment.");
-                    System.out.println(taskList.get(index).getType() + "[X] " + taskList.get(index).getName());
+                    Ui.markTask(taskList.get(index));
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    Ui.taskNotFound();
                 }
             }
             case "unmark" -> {
@@ -183,15 +171,14 @@ public class SirTalksALot {
                     int index = Integer.parseInt(input[1]) - 1;
                     taskList.get(index).unmarkCompleted();
                     storage.saveData(taskList);
-                    System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
-                    System.out.println(taskList.get(index).getType() + "[ ] " + taskList.get(index).getName());
+                    Ui.unmarkTask(taskList.get(index));
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("It seems no such task exists, for I have heard no mention of it, nor does it appear to fall within the realm of possibility.");
+                    Ui.taskNotFound();
                 }
             }
             case "todo" -> {
                 if (input.length == 1) {
-                    System.out.println("The description of the todo cannot be left empty, for how would one know what is to be done?");
+                    Ui.descriptionNotFound();
                     break;
                 } else {
                     String todo = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
@@ -199,69 +186,67 @@ public class SirTalksALot {
                     Ui.addTask();
                     taskList.add(new ToDo(todo));
                     storage.saveData(taskList);
-                    System.out.println("    [T][-] " + taskList.get(taskList.size() - 1).getName());
+                    System.out.print("    ");
+                    Ui.printTask(taskList.get(taskList.size() - 1));
                     Ui.countTask(taskList.size());
                 }
             }
             case "deadline" -> {
                 if (input.length == 1) {
-                    System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                    Ui.descriptionNotFound();
                     break;
                 }
                 String deadLine = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
                 String[] temp = deadLine.split(" /by ", 2);
                 if (deadLine.startsWith("/by") && temp.length == 1) {
-                    System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                    Ui.descriptionNotFound();
                     break;
                 }
                 if (temp.length == 1) {
-                    System.out.println("The deadline cannot be left empty, for how would one know when the task is to be done?");
+                    Ui.deadLineNotFound();
                     break;
                 }
-
                 Ui.addTask();
                 taskList.add(new DeadLine(temp[0], LocalDate.parse(temp[1])));
                 storage.saveData(taskList);
-                System.out.println("    [D][-] " + taskList.get(taskList.size() - 1).getName()
-                        + " (by: " + taskList.get(taskList.size() - 1).getDeadLine() + ")");
+                System.out.print("    ");
+                Ui.printTask(taskList.get(taskList.size() - 1));
                 Ui.countTask(taskList.size());
             }
             case "event" -> {
                 if (input.length == 1) {
-                    System.out.println("The description of the event cannot be left empty, for how would one know what is to be done?");
+                    Ui.descriptionNotFound();
                     break;
                 }
                 String event = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
-
                 String[] temp = event.split(" /from ", 2);
                 if (event.startsWith("/from") && temp.length == 1) {
-                    System.out.println("The description of the deadline cannot be left empty, for how would one know what is to be done?");
+                    Ui.descriptionNotFound();
                     break;
                 }
                 if (temp.length == 1) {
-                    System.out.println("The start time of the event cannot be left empty, for how would one know when the event is?");
+                    Ui.startTimeNotFound();
                     break;
                 }
                 String[] temp1 = temp[1].split(" /to ", 2);
                 if (temp1.length == 1) {
-                    System.out.println("The end time of the event cannot be left empty, for how would one know when the event concludes?");
+                    Ui.endTimeNotFound();
                     break;
                 }
-
                 Ui.addTask();
                 taskList.add(new Event(temp[0], LocalDate.parse(temp1[0]), LocalDate.parse(temp1[1])));
                 storage.saveData(taskList);
-                System.out.println("    [E][-] " + taskList.get(taskList.size() - 1).getName() + " (from: " + temp1[0] + " to: " + temp1[1] + ")");
+                System.out.print("    ");
+                Ui.printTask(taskList.get(taskList.size() - 1));
                 Ui.countTask(taskList.size());
             }
             default -> {
-                System.out.println("Speak clearly! I know not what such words mean. Attempt once more.");
+                Ui.promptAgain();
             }
             }
             Ui.breakLine();
             input = scanner.nextLine().split(" ");
         }
-
         Ui.breakLine();
         Ui.sayBye();
         storage.saveData(taskList);
