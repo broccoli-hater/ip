@@ -1,3 +1,10 @@
+import command.Command;
+import command.ExitCommand;
+import task.TaskList;
+import util.Parser;
+import util.Storage;
+import util.Ui;
+
 public class SirTalksALot {
     private Storage storage;
     private Ui ui = new Ui();
@@ -27,10 +34,7 @@ public class SirTalksALot {
 
             Ui.breakLine();
         }
-        Ui.breakLine();
-        Ui.sayBye();
         storage.saveData(taskList);
-        Ui.breakLine();
     }
 
     public static void main(String[] args) {
