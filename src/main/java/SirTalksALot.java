@@ -1,7 +1,3 @@
-import java.util.Arrays;
-import java.util.Scanner;
-import java.time.LocalDate;
-
 public class SirTalksALot {
     private Storage storage;
     private Ui ui = new Ui();
