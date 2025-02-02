@@ -1,10 +1,5 @@
 package util;
 
-import task.DeadLine;
-import task.Event;
-import task.Task;
-import task.TaskList;
-import task.ToDo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -15,15 +10,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import task.DeadLine;
+import task.Event;
+import task.Task;
+import task.TaskList;
+import task.ToDo;
+
+/**
+ * A class to handle the loading and saving of tasks to and from a file.
+ */
 public class Storage {
     private String directory;
     private String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     *
+     * @param filePath The path to the file where tasks are stored.
+     */
     public Storage(String filePath) {
         this.directory = filePath.substring(0, filePath.lastIndexOf("/"));
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file and returns them as an ArrayList.
+     *
+     * @return An ArrayList of tasks loaded from the file.
+     */
     public ArrayList<Task> loadData() {
         ArrayList<Task> taskList = new ArrayList<>();
 
@@ -75,6 +89,11 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Saves the tasks from the TaskList to the file.
+     *
+     * @param taskList The TaskList containing the tasks to be saved.
+     */
     public void saveData(TaskList taskList) {
         try {
             File d = new File(directory);
