@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+class ToDo extends Task {
+    public ToDo(String name) {
+        super(name);
+    }
 
-public class ToDo {
+    public String getType() {
+        return "[T]";
+    }
 }

@@ -1,6 +1,12 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Ui {
+    Scanner scanner = new Scanner(System.in);
+
+    public String readCommand() {
+        return scanner.nextLine();
+    }
 
     public static void breakLine() {
         System.out.println("____________________________________________________________");
@@ -43,34 +49,24 @@ class Ui {
         System.out.println(countTask);
     }
 
-    public static void printTask(Task task) {
-        System.out.println(task.getType() + task.isComplete() + " " + task.getName() + " " + task);
-    }
-
-    public static void printList(ArrayList<Task> taskList) {
+    public static void printList() {
         System.out.println("Hear ye! These are the tasks upon thy list, as decreed by thine own hand:");
-        int counter = 1;
-        for (Task task : taskList) {
-            System.out.print(counter + ". ");
-            printTask(task);
-            counter++;
-        }
     }
 
     public static void deleteTask(Task task) {
         System.out.println("Noted, then. I have seen fit to remove this trivial task.");
         System.out.print("    ");
-        printTask(task);
+        System.out.println(task.toString());
     }
 
     public static void markTask(Task task) {
         System.out.println("Behold! A task completed! A most noble accomplishment.");
-        printTask(task);
+        System.out.println(task.toString());
     }
 
     public static void unmarkTask(Task task) {
         System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
-        printTask(task);
+        System.out.println(task.toString());
     }
 
     public static void taskNotFound() {
@@ -92,5 +88,9 @@ class Ui {
 
     public static void endTimeNotFound() {
         System.out.println("The end time cannot be left empty, for how would one know when the event concludes?");
+    }
+
+    public static void incorrectTimeFormat() {
+        System.out.println("The chronicles of time must be inscribed in the noble and proper manner: yyyy-mm-dd!");
     }
 }

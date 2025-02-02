@@ -1,1 +1,4 @@
-[T] [-] dfasdf das 
+[T] [X] dfasdf 
+[D] [X] jjjjj (by: 02/09/2020)
+[T] [-] dfasdfds 
+[T] [-] dkfjlsdfjsldjf 

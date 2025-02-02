@@ -68,7 +68,7 @@ class Storage {
         return taskList;
     }
 
-    public void saveData(ArrayList<? extends Task> taskList) {
+    public void saveData(TaskList taskList) {
         try {
             File d = new File(directory);
             File f = new File(filePath);
@@ -79,9 +79,10 @@ class Storage {
             }
 
             FileWriter fw = new FileWriter(filePath);
-            for (Task task : taskList) {
+            for (int i = 0; i < taskList.size(); i++) {
+                Task task = taskList.get(i);
                 String type = task.getType();
-                fw.write(type + " " + task.isComplete() + " " + task.getName() + " " + task.toString() + "\n");
+                fw.write(type + " " + task.isComplete() + " " + task.getName() + " " + task.getTiming() + "\n");
             }
             fw.close();
 
