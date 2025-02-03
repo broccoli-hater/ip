@@ -8,6 +8,7 @@ import command.Command;
 import command.DeleteCommand;
 import command.ErrorCommand;
 import command.ExitCommand;
+import command.FindCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
@@ -52,6 +53,9 @@ public class Parser {
             }
             case "unmark" -> {
                 return new UnmarkCommand(Integer.parseInt(tokens[1]) - 1);
+            }
+            case "find" -> {
+                return new FindCommand(tokens[1]);
             }
             case "bye" -> {
                 return new ExitCommand();
