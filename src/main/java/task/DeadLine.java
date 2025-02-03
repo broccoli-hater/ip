@@ -46,6 +46,6 @@ public class DeadLine extends Task {
      * @return A string representing the deadline in the format "(by: dd/MM/yyyy)".
      */
     public String getTiming() {
-        return "(by: " + getDeadLine() + ")";
+        return "(by: " + getDeadLine() + ") ";
     }
 }

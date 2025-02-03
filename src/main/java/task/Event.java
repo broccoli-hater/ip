@@ -57,6 +57,6 @@ public class Event extends Task {
      * @return A string representing the event period in the format "(from: dd/MM/yyyy to: dd/MM/yyyy)".
      */
     public String getTiming() {
-        return "(from: " + getStart() + " to: " + getEnd() + ")";
+        return "(from: " + getStart() + " to: " + getEnd() + ") ";
     }
 }
