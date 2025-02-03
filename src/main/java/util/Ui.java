@@ -82,6 +82,14 @@ public class Ui {
     }
 
     /**
+     * Displays a header before listing tasks that matches the keyword.
+     */
+    public static void findTask() {
+        System.out.println("Here lie the matching tasks in thy list that align "
+                + "with thy query, as decreed by my boundless wisdom and keen eye!");
+    }
+
+    /**
      * Displays a header before listing all tasks.
      */
     public static void printList() {

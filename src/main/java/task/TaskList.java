@@ -12,6 +12,14 @@ public class TaskList {
     private ArrayList<Task> taskList;
 
     /**
+     * Constructs an empty TaskList.
+     *
+     */
+    public TaskList() {
+        this.taskList = new ArrayList<>();
+    }
+
+    /**
      * Constructs a TaskList with the specified list of tasks.
      *
      * @param tasks The initial list of tasks.
@@ -64,6 +72,21 @@ public class TaskList {
      */
     public void remove(int index) {
         taskList.remove(index);
+    }
+
+    /**
+     * Finds the task(s) in the task list whose description(s) match the keyword.
+     *
+     * @param keyword The keyword to search by.
+     */
+    public TaskList find(String keyword) {
+        TaskList matchList = new TaskList();
+        for (Task task : taskList) {
+            if (task.getName().contains(keyword)) {
+                matchList.add(task);
+            }
+        }
+        return matchList;
     }
 
     /**
