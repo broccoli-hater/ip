@@ -10,7 +10,8 @@ import util.Ui;
  * and saves the updated task list to storage.
  */
 public class MarkCommand extends Command {
-    private int index;
+    private final int index;
+    private final StringBuilder response = new StringBuilder();
 
     /**
      * Constructs a MarkCommand with the specified index of the task to be marked as completed.
@@ -35,9 +36,14 @@ public class MarkCommand extends Command {
         try {
             taskList.get(index).markCompleted();
             storage.saveData(taskList);
-            Ui.markTask(taskList.get(index));
+            response.append(Ui.markTask(taskList.get(index)));
         } catch (IndexOutOfBoundsException e) {
-            Ui.taskNotFound();
+            response.append(Ui.printTaskNotFound());
         }
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }

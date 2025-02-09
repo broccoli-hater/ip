@@ -9,7 +9,8 @@ import util.Ui;
  * This command displays appropriate error messages based on the type of error encountered.
  */
 public class ErrorCommand extends Command {
-    private String error;
+    private final String error;
+    private final StringBuilder response = new StringBuilder();
 
     /**
      * Constructs an ErrorCommand with the specified error type.
@@ -32,20 +33,25 @@ public class ErrorCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         switch (error) {
         case "empty description" -> {
-            Ui.descriptionNotFound();
+            response.append(Ui.printDescriptionNotFound());
         }
         case "empty deadline" -> {
-            Ui.deadLineNotFound();
+            response.append(Ui.printDeadLineNotFound());
         }
         case "empty start time" -> {
-            Ui.startTimeNotFound();
+            response.append(Ui.printStartTimeNotFound());
         }
         case "empty end time" -> {
-            Ui.endTimeNotFound();
+            response.append(Ui.printEndTimeNotFound());
         }
         default -> {
-            Ui.promptAgain();
+            response.append(Ui.promptAgain());
         }
         }
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }

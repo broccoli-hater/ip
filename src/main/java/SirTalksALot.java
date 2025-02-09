@@ -36,26 +36,22 @@ public class SirTalksALot {
      * Saves the task list to the file upon exiting.
      */
     public void run() {
-        Ui.breakLine();
-        Ui.sayHello();
-        Ui.breakLine();
+        System.out.println(Ui.printBreakLine());
+        System.out.println(Ui.sayHello());
+        System.out.println(Ui.printBreakLine());
 
         boolean isExit = false;
         while (!isExit) {
             String input = ui.readCommand();
-            Ui.breakLine();
-
+            System.out.println(Ui.printBreakLine());
             Command command = parser.parse(input);
             command.execute(taskList, ui, storage);
-
             commandType = command.getClass().getSimpleName();
             System.out.println(commandType);
-
             if (command instanceof ExitCommand) {
                 isExit = true;
             }
-
-            Ui.breakLine();
+            System.out.println(Ui.printBreakLine());
         }
         storage.saveData(taskList);
     }
@@ -66,8 +62,10 @@ public class SirTalksALot {
     public String getResponse(String input) {
         Command command = parser.parse(input);
         command.execute(taskList, ui, storage);
+        String response = command.getResponse();
         commandType = command.getClass().getSimpleName();
-        return commandType;
+
+        return response;
     }
 
     public String getCommandType() {

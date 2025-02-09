@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import util.Ui;
 
 import java.util.Objects;
 
@@ -31,6 +32,11 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+        String greeting = Ui.sayHello();
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(greeting, knightImage)
+        );
     }
 
     /** Injects the Duke instance */
@@ -53,5 +59,6 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, knightImage, commandType)
         );
         userInput.clear();
+
     }
 }
