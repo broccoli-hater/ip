@@ -1,0 +1,81 @@
+.root {
+    main-color: rgb(237, 255, 242);       /* Create a looked-up color called "main-color" within root. */
+    -fx-background-color: main-color;
+
+    -fx-background-image: url("../images/hereNaganoBear.png"); /* Set image */
+    -fx-background-size: stretch;
+}
+
+.text-field {
+    -fx-background-color: #eeefed;
+    -fx-font: 20px "Arial";
+}
+
+.button {
+    -fx-background-color: #d6d7d3;
+    -fx-font: italic bold 16px "Arial";
+}
+
+.button:hover {
+    -fx-background-color: #959693;
+    -fx-font-size: 18px;
+}
+
+.button:pressed {
+    -fx-background-color:#40403f;
+    -fx-font-size: 20px;
+}
+
+.scroll-pane {
+    -fx-background-color: rgba(0,0,0,.5);
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-background-color: main-color;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ff9cb4;
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+
+.label {
+    background:white;
+    -fx-background-color: background;
+    -fx-border-color: #d6d7d3 #c0c1bd #abaca8 #959693;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+    -fx-text-fill: ladder(background, white 49%, black 50%);
+}
+
+.reply-label {
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+}
+
+#displayPicture {
+    /* Shadow effect on image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+
+    /* Change size of image. */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+
+    /* Rotate image clockwise by degrees. */
+    -fx-rotate: 0;
+}
+
+

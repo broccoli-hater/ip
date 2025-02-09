@@ -23,45 +23,45 @@ public class Ui {
     /**
      * Prints a line break to separate sections of the conversation.
      */
-    public static void breakLine() {
-        System.out.println("____________________________________________________________");
+    public static String printBreakLine() {
+        return "____________________________________________________________";
     }
 
     /**
      * Displays a welcome message to the user.
      */
-    public static void sayHello() {
+    public static String sayHello() {
         String greeting = "Greetings! It is I, Sir Talks-A-Lot. \n"
                 + "Ah, so you wish to converse with one such as myself? \n"
                 + "A noble knight, sworn to honor and valor, holder of great wisdom and unyielding strength? \n"
                 + "Very well, I shall indulge thee in thy request. \n"
                 + "Speak now, peasant, What dost thou seek from a knight of my stature?";
-        System.out.println(greeting);
+        return greeting;
     }
 
     /**
      * Displays a farewell message to the user.
      */
-    public static void sayBye() {
+    public static String sayBye() {
         String bye = "Hah! A quick departure, is it? Very well, then. \n"
                 + "Farewell for now.";
-        System.out.println(bye);
+        return bye;
     }
 
     /**
      * Prompts the user to re-enter their input due to invalid or unclear input.
      */
-    public static void promptAgain() {
-        System.out.println("Speak clearly! I know not what such words mean. Attempt once more.");
+    public static String promptAgain() {
+        return "Speak clearly! I know not what such words mean. Attempt once more.";
     }
 
     /**
      * Confirms that a task has been added to the list.
      */
-    public static void addTask() {
+    public static String addTask() {
         String addTask = "Verily, I have inscribed this task upon the list.\n"
                 + "Let no task go unfulfilled and no duty unrecorded!";
-        System.out.println(addTask);
+        return addTask;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Ui {
      *
      * @param count The number of tasks in the list.
      */
-    public static void countTask(int count) {
+    public static String countTask(int count) {
         String countTask = "";
         if (count == 0) {
             countTask = "Thou hast " + count + " tasks upon the list.";
@@ -78,22 +78,22 @@ public class Ui {
         } else {
             countTask = "Thou hast " + count + " tasks upon the list, each one a worthy pursuit!";
         }
-        System.out.println(countTask);
+        return countTask;
     }
 
     /**
      * Displays a header before listing tasks that matches the keyword.
      */
-    public static void findTask() {
-        System.out.println("Here lie the matching tasks in thy list that align "
-                + "with thy query, as decreed by my boundless wisdom and keen eye!");
+    public static String findTask() {
+        return "Here lie the matching tasks in thy list that align "
+                + "with thy query, as decreed by my boundless wisdom and keen eye!";
     }
 
     /**
      * Displays a header before listing all tasks.
      */
-    public static void printList() {
-        System.out.println("Hear ye! These are the tasks upon thy list, as decreed by thine own hand:");
+    public static String printList() {
+        return "Hear ye! These are the tasks upon thy list, as decreed by thine own hand:";
     }
 
     /**
@@ -101,10 +101,9 @@ public class Ui {
      *
      * @param task The task that was deleted.
      */
-    public static void deleteTask(Task task) {
-        System.out.println("Noted, then. I have seen fit to remove this trivial task.");
-        System.out.print("    ");
-        System.out.println(task.toString());
+    public static String deleteTask(Task task) {
+        return "Noted, then. I have seen fit to remove this trivial task. \n"
+                + "    " + task.toString();
     }
 
     /**
@@ -112,9 +111,9 @@ public class Ui {
      *
      * @param task The task that was marked as completed.
      */
-    public static void markTask(Task task) {
-        System.out.println("Behold! A task completed! A most noble accomplishment.");
-        System.out.println(task.toString());
+    public static String markTask(Task task) {
+        return "Behold! A task completed! A most noble accomplishment. \n"
+                + task.toString();
     }
 
     /**
@@ -122,51 +121,51 @@ public class Ui {
      *
      * @param task The task that was unmarked as completed.
      */
-    public static void unmarkTask(Task task) {
-        System.out.println("Alas, a task left to be conquered. Its time has not yet come to pass.");
-        System.out.println(task.toString());
+    public static String unmarkTask(Task task) {
+        return "Alas, a task left to be conquered. Its time has not yet come to pass.\n"
+                + task.toString();
     }
 
     /**
      * Informs the user that the specified task does not exist.
      */
-    public static void taskNotFound() {
-        System.out.println("It seems no such task exists, for I have heard no mention of it, "
-                + "nor does it appear to fall within the realm of possibility.");
+    public static String printTaskNotFound() {
+        return "It seems no such task exists, for I have heard no mention of it, "
+                + "nor does it appear to fall within the realm of possibility.";
     }
 
     /**
      * Informs the user that the task description cannot be empty.
      */
-    public static void descriptionNotFound() {
-        System.out.println("The description cannot be left empty, for how would one know what is to be done?");
+    public static String printDescriptionNotFound() {
+        return "The description cannot be left empty, for how would one know what is to be done?";
     }
 
     /**
      * Informs the user that the task deadline cannot be empty.
      */
-    public static void deadLineNotFound() {
-        System.out.println("The deadline cannot be left empty, for how would one know when the task is to be done?");
+    public static String printDeadLineNotFound() {
+        return "The deadline cannot be left empty, for how would one know when the task is to be done?";
     }
 
     /**
      * Informs the user that the event start time cannot be empty.
      */
-    public static void startTimeNotFound() {
-        System.out.println("The start time cannot be left empty, for how would one know when the event is?");
+    public static String printStartTimeNotFound() {
+        return "The start time cannot be left empty, for how would one know when the event is?";
     }
 
     /**
      * Informs the user that the event end time cannot be empty.
      */
-    public static void endTimeNotFound() {
-        System.out.println("The end time cannot be left empty, for how would one know when the event concludes?");
+    public static String printEndTimeNotFound() {
+        return "The end time cannot be left empty, for how would one know when the event concludes?";
     }
 
     /**
      * Informs the user that the time format is incorrect and provides the correct format.
      */
-    public static void incorrectTimeFormat() {
-        System.out.println("The chronicles of time must be inscribed in the noble and proper manner: yyyy-mm-dd!");
+    public static String printIncorrectTimeFormat() {
+        return "The chronicles of time must be inscribed in the noble and proper manner: yyyy-mm-dd!";
     }
 }

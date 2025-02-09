@@ -9,6 +9,8 @@ import util.Ui;
  * This command displays all tasks to the user or a message if the task list is empty.
  */
 public class ListCommand extends Command {
+    private final StringBuilder response = new StringBuilder();
+
     /**
      * Executes the list command. This method displays all tasks in the task list
      * or a message indicating that the task list is empty.
@@ -20,10 +22,16 @@ public class ListCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         if (taskList.isEmpty()) {
-            Ui.countTask(0);
+            response.append(Ui.countTask(0));
         } else {
-            Ui.printList();
-            taskList.print();
+            response.append(Ui.printList());
+            response.append("\n");
+            response.append(taskList);
         }
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }

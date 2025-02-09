@@ -112,6 +112,7 @@ public class TaskList {
         for (Task task : taskList) {
             stringBuilder.append(counter).append(". ");
             stringBuilder.append(task);
+            stringBuilder.append("\n");
             counter++;
         }
         return stringBuilder.toString();

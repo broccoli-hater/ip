@@ -10,7 +10,9 @@ import util.Ui;
  * and saves the updated task list to storage.
  */
 public class DeleteCommand extends Command {
-    private int index;
+    private final int index;
+    private final StringBuilder response = new StringBuilder();
+
 
     /**
      * Constructs a DeleteCommand with the specified index of the task to be deleted.
@@ -33,12 +35,18 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         try {
-            Ui.deleteTask(taskList.get(index));
+            response.append(Ui.deleteTask(taskList.get(index)));
+            response.append("\n");
             taskList.remove(index);
             storage.saveData(taskList);
-            Ui.countTask(taskList.size());
+            response.append(Ui.countTask(taskList.size()));
         } catch (IndexOutOfBoundsException e) {
-            Ui.taskNotFound();
+            response.replace(0, response.length(), Ui.printTaskNotFound());
         }
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }

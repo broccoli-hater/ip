@@ -11,6 +11,7 @@ import util.Ui;
  */
 public class FindCommand extends Command {
     private String keyword;
+    private final StringBuilder response = new StringBuilder();
 
     /**
      * Constructs a FindCommand with the specified task to be added.
@@ -31,7 +32,13 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        Ui.findTask();
-        taskList.find(keyword).print();
+        response.append(Ui.findTask());
+        response.append("\n");
+        response.append(taskList.find(keyword));
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }

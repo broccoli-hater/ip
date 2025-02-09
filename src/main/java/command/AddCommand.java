@@ -11,7 +11,8 @@ import util.Ui;
  * and saving the updated task list to storage.
  */
 public class AddCommand extends Command {
-    private Task task;
+    private final Task task;
+    private final StringBuilder response = new StringBuilder();
 
     /**
      * Constructs an AddCommand with the specified task to be added.
@@ -32,11 +33,18 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        Ui.addTask();
+        response.append(Ui.addTask());
+        response.append("\n");
         taskList.add(task);
         storage.saveData(taskList);
-        System.out.print("    ");
-        System.out.println(taskList.get(taskList.size() - 1).toString());
-        Ui.countTask(taskList.size());
+        response.append("\t");
+        response.append(taskList.get(taskList.size() - 1).toString());
+        response.append("\n");
+        response.append(Ui.countTask(taskList.size()));
+    }
+
+    @Override
+    public String getResponse(){
+        return response.toString();
     }
 }
