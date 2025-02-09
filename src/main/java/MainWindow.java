@@ -19,8 +19,6 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private SirTalksALot sirTalksALot;
 
@@ -35,7 +33,7 @@ public class MainWindow extends AnchorPane {
 
         String greeting = Ui.sayHello();
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(greeting, knightImage)
+                DialogBox.getDukeDialog(greeting, knightImage, "")
         );
     }
 
@@ -59,6 +57,5 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, knightImage, commandType)
         );
         userInput.clear();
-
     }
 }

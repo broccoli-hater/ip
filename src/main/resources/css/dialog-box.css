@@ -4,13 +4,13 @@
 }
 
 .add-label {
-    -fx-background-color: yellow;
+    -fx-background-color: #ff9cb4;
 }
 
 .marked-label {
-    -fx-background-color: palegreen;
+    -fx-background-color: #ff9cb4;
 }
 
 .delete-label {
-    -fx-background-color: lightpink;
+    -fx-background-color: #ff9cb4;
 }

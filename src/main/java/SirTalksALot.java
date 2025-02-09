@@ -35,26 +35,26 @@ public class SirTalksALot {
      * and executes them until an exit command is received.
      * Saves the task list to the file upon exiting.
      */
-    public void run() {
-        System.out.println(Ui.printBreakLine());
-        System.out.println(Ui.sayHello());
-        System.out.println(Ui.printBreakLine());
-
-        boolean isExit = false;
-        while (!isExit) {
-            String input = ui.readCommand();
-            System.out.println(Ui.printBreakLine());
-            Command command = parser.parse(input);
-            command.execute(taskList, ui, storage);
-            commandType = command.getClass().getSimpleName();
-            System.out.println(commandType);
-            if (command instanceof ExitCommand) {
-                isExit = true;
-            }
-            System.out.println(Ui.printBreakLine());
-        }
-        storage.saveData(taskList);
-    }
+//    public void run() {
+//        System.out.println(Ui.printBreakLine());
+//        System.out.println(Ui.sayHello());
+//        System.out.println(Ui.printBreakLine());
+//
+//        boolean isExit = false;
+//        while (!isExit) {
+//            String input = ui.readCommand();
+//            System.out.println(Ui.printBreakLine());
+//            Command command = parser.parse(input);
+//            command.execute(taskList, ui, storage);
+//            commandType = command.getClass().getSimpleName();
+//            System.out.println(commandType);
+//            if (command instanceof ExitCommand) {
+//                isExit = true;
+//            }
+//            System.out.println(Ui.printBreakLine());
+//        }
+//        storage.saveData(taskList);
+//    }
 
     /**
      * Generates a response for the user's chat message.
@@ -71,13 +71,4 @@ public class SirTalksALot {
     public String getCommandType() {
         return commandType;
     }
-
-//    /**
-//     * The entry point of the SirTalksALot application.
-//     *
-//     * @param args Command-line arguments (not used).
-//     */
-//    public static void main(String[] args) {
-//        new SirTalksALot("data/sirtalksalot.txt").run();
-//    }
 }
