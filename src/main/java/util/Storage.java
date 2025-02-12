@@ -20,8 +20,8 @@ import task.ToDo;
  * A class to handle the loading and saving of tasks to and from a file.
  */
 public class Storage {
-    private String directory;
-    private String filePath;
+    private final String directory;
+    private final String filePath;
 
     /**
      * Constructs a Storage object with the specified file path.

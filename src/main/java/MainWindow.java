@@ -22,9 +22,9 @@ public class MainWindow extends AnchorPane {
 
     private SirTalksALot sirTalksALot;
 
-    private Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
             "/images/user.jpg")));
-    private Image knightImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+    private final Image knightImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
             "/images/knight.jpg")));
 
     @FXML
@@ -37,7 +37,7 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    /** Injects the Duke instance */
+    /** Injects the SirTalksALot instance */
     public void setSirTalksALot(SirTalksALot s) {
         sirTalksALot = s;
     }

@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * This class extends the `Task` class and includes a deadline date.
  */
 public class DeadLine extends Task {
-    private LocalDate deadLine;
+    private final LocalDate deadLine;
 
     /**
      * Constructs a DeadLine task with the specified name and deadline date.
