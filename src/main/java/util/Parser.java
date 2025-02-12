@@ -103,7 +103,6 @@ public class Parser {
         try {
             deadline = LocalDate.parse(temp[1]);
         } catch (DateTimeParseException e) {
-            Ui.printIncorrectTimeFormat();
             throw new IllegalArgumentException("invalid deadline");
         }
 
@@ -137,7 +136,6 @@ public class Parser {
             startTime = LocalDate.parse(temp1[0]);
             endTime = LocalDate.parse(temp1[1]);
         } catch (DateTimeParseException e) {
-            Ui.printIncorrectTimeFormat();
             throw new IllegalArgumentException("invalid deadline");
         }
 

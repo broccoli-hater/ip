@@ -21,13 +21,6 @@ public class Ui {
     }
 
     /**
-     * Prints a line break to separate sections of the conversation.
-     */
-    public static String printBreakLine() {
-        return "____________________________________________________________";
-    }
-
-    /**
      * Displays a welcome message to the user.
      */
     public static String sayHello() {
