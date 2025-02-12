@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Scanner;
-
 import task.Task;
 
 /**
@@ -9,17 +7,6 @@ import task.Task;
  * This class is responsible for reading user input and providing feedback.
  */
 public class Ui {
-    private Scanner scanner = new Scanner(System.in);
-
-    /**
-     * Reads a command from the user.
-     *
-     * @return The user's input as a string.
-     */
-    public String readCommand() {
-        return scanner.nextLine();
-    }
-
     /**
      * Displays a welcome message to the user.
      */

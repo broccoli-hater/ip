@@ -5,7 +5,7 @@ package task;
  * This class serves as the base class for specific types of tasks.
  */
 public class Task {
-    private String name;
+    private final String name;
     private boolean isComplete = false;
 
     /**
