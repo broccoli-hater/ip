@@ -32,9 +32,15 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        response.append(Ui.findTask());
-        response.append("\n");
-        response.append(taskList.find(keyword));
+        TaskList matches = taskList.find(keyword);
+        if (matches.isEmpty()) {
+            response.append(Ui.printNoMatchingTasksFound());
+        } else {
+            assert !matches.isEmpty() : "Matching task list is found";
+            response.append(Ui.findTask());
+            response.append("\n");
+            response.append(matches);
+        }
     }
 
     @Override

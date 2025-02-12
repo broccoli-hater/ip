@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  */
 public class TaskList {
-    private ArrayList<Task> taskList;
+    private final ArrayList<Task> taskList;
 
     /**
      * Constructs an empty TaskList.
@@ -26,6 +26,7 @@ public class TaskList {
      */
     public TaskList(ArrayList<Task> tasks) {
         this.taskList = tasks;
+        assert !taskList.isEmpty() : "TaskList should not be empty after initialization with tasks";
     }
 
     /**

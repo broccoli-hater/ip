@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
  * This class extends the `Task` class and includes start and end dates for the event.
  */
 public class Event extends Task {
-    private LocalDate start;
-    private LocalDate end;
+    private final LocalDate start;
+    private final LocalDate end;
 
     /**
      * Constructs an Event task with the specified name, start date, and end date.
