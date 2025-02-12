@@ -99,12 +99,7 @@ public class Parser {
             throw new IllegalArgumentException("empty deadline");
         }
 
-        LocalDate deadline;
-        try {
-            deadline = LocalDate.parse(temp[1]);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("invalid deadline");
-        }
+        LocalDate deadline = verifyDateFormat(temp[1]);
 
         return new AddCommand(new DeadLine(temp[0], deadline));
     }
@@ -130,15 +125,17 @@ public class Parser {
             throw new IllegalArgumentException("empty end time");
         }
 
-        LocalDate startTime;
-        LocalDate endTime;
+        LocalDate startTime = verifyDateFormat(temp1[0]);
+        LocalDate endTime = verifyDateFormat(temp1[1]);
+
+        return new AddCommand(new Event(temp[0], startTime, endTime));
+    }
+
+    private LocalDate verifyDateFormat(String d) {
         try {
-            startTime = LocalDate.parse(temp1[0]);
-            endTime = LocalDate.parse(temp1[1]);
+            return LocalDate.parse(d);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("invalid deadline");
         }
-
-        return new AddCommand(new Event(temp[0], startTime, endTime));
     }
 }
