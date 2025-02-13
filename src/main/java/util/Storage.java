@@ -40,53 +40,97 @@ public class Storage {
      */
     public ArrayList<Task> loadData() {
         ArrayList<Task> taskList = new ArrayList<>();
+        File f = new File(filePath);
+        if (!f.exists()) {
+            return taskList;
+        }
 
         try {
-            File f = new File(filePath);
-            if (f.exists()) {
-                Scanner sc = new Scanner(f);
-                while (sc.hasNextLine()) {
-                    String[] task = sc.nextLine().split(" ");
-                    switch (task[0]) {
-                    case "[T]" -> {
-                        ToDo toDo = new ToDo(task[2]);
-                        if (task[1].equals("[X]")) {
-                            toDo.markCompleted();
-                        }
-                        taskList.add(toDo);
-                    }
-                    case "[D]" -> {
-                        String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
-                        String[] token1 = token.split(" \\(by: ", 2);
-                        DeadLine deadLine = new DeadLine(token1[0],
-                                LocalDate.parse(token1[1].substring(0, token1[1].length() - 1),
-                                        DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                        if (task[1].equals("[X]")) {
-                            deadLine.markCompleted();
-                        }
-                        taskList.add(deadLine);
-                    }
-                    case "[E]" -> {
-                        String token = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
-                        String[] token1 = token.split(" \\(from: ", 2);
-                        String[] token2 = token1[1].split(" to: ", 2);
-                        Event event = new Event(token1[0],
-                                LocalDate.parse(token2[0], DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                                LocalDate.parse(token2[1].substring(0, token2[1].length() - 1),
-                                        DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                        if (task[1].equals("[X]")) {
-                            event.markCompleted();
-                        }
-                        taskList.add(event);
-                    }
-                    default -> System.out.println("Wrong file format!");
-                    }
+            Scanner sc = new Scanner(f);
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                Task task = parseTask(line);
+                if (task != null) {
+                    taskList.add(task);
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
         }
         return taskList;
+    }
+
+    private static Task parseTask(String line) {
+        String[] task = line.split(" ");
+        if (task.length < 3) {
+            return null;
+        }
+
+        String type = task[0];
+        boolean isCompleted = task[1].equals("[X]");
+        String details = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
+
+        switch (type) {
+        case "[T]" -> {
+            return createToDo(isCompleted, details);
+        }
+        case "[D]" -> {
+            return createDeadLine(isCompleted, details);
+        }
+        case "[E]" -> {
+            return createEvent(isCompleted, details);
+        }
+        default -> {
+            System.out.println("Wrong file format!");
+            return null;
+        }
+        }
+    }
+
+    private static Event createEvent(boolean isCompleted, String details) {
+        String[] tokens = details.split(" \\(from: ");
+        if (tokens.length != 2) {
+            return null;
+        }
+
+        String[] timeTokens = tokens[1].split(" to: ");
+        if (timeTokens.length != 2) {
+            return null;
+        }
+
+        LocalDate startTime = LocalDate.parse(timeTokens[0], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate endTime = LocalDate.parse(timeTokens[1].substring(0, timeTokens[1].length() - 1),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Event event = new Event(tokens[0], startTime, endTime);
+
+        if (isCompleted) {
+            event.markCompleted();
+        }
+        return event;
+    }
+
+    private static DeadLine createDeadLine(boolean isCompleted, String details) {
+        String[] tokens = details.split(" \\(by: ");
+        if (tokens.length != 2) {
+            return null;
+        }
+
+        LocalDate date = LocalDate.parse(tokens[1].substring(0, tokens[1].length() - 1),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        DeadLine deadLine = new DeadLine(tokens[0], date);
+
+        if (isCompleted) {
+            deadLine.markCompleted();
+        }
+        return deadLine;
+    }
+
+    private static ToDo createToDo(boolean isCompleted, String details) {
+        ToDo toDo = new ToDo(details);
+        if (isCompleted) {
+            toDo.markCompleted();
+        }
+        return toDo;
     }
 
     /**

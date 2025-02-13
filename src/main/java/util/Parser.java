@@ -132,13 +132,7 @@ public class Parser {
             throw new IllegalArgumentException("empty deadline");
         }
 
-        LocalDate deadline;
-        try {
-            deadline = LocalDate.parse(temp[1]);
-        } catch (DateTimeParseException e) {
-            System.out.println(Ui.printIncorrectTimeFormat());
-            throw new IllegalArgumentException("invalid time format");
-        }
+        LocalDate deadline = verifyDateFormat(temp[1]);
 
         return new AddCommand(new DeadLine(temp[0], deadline));
     }
@@ -166,16 +160,17 @@ public class Parser {
             throw new IllegalArgumentException("empty end time");
         }
 
-        LocalDate startTime;
-        LocalDate endTime;
-        try {
-            startTime = LocalDate.parse(temp1[0]);
-            endTime = LocalDate.parse(temp1[1]);
-        } catch (DateTimeParseException e) {
-            System.out.println(Ui.printIncorrectTimeFormat());
-            throw new IllegalArgumentException("invalid time format");
-        }
+        LocalDate startTime = verifyDateFormat(temp1[0]);
+        LocalDate endTime = verifyDateFormat(temp1[1]);
 
         return new AddCommand(new Event(temp[0], startTime, endTime));
+    }
+
+    private LocalDate verifyDateFormat(String d) {
+        try {
+            return LocalDate.parse(d);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("invalid time format");
+        }
     }
 }
