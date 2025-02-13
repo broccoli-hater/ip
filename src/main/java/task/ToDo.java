@@ -1,7 +1,10 @@
 package task;
 
+import java.util.ArrayList;
+
 /**
  * A task without a specific deadline or event timing.
+ * In the form: todo {description} {tags}
  * This class extends the `Task` class and provides a specific type identifier for ToDo tasks.
  */
 public class ToDo extends Task {
@@ -14,6 +17,10 @@ public class ToDo extends Task {
         super(name);
     }
 
+    public ToDo(String name, ArrayList<String> tagList) {
+        super(name, tagList);
+    }
+
     /**
      * Returns the type identifier for the task.
      *
@@ -21,5 +28,10 @@ public class ToDo extends Task {
      */
     public String getType() {
         return "[T]";
+    }
+
+    @Override
+    public String toString() {
+        return this.getType() + this.isComplete() + " " + this.getName() + " " + this.getTags();
     }
 }

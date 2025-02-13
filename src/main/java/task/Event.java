@@ -2,9 +2,11 @@ package task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * A task that occurs during a specific time period.
+ * In the form: event {description} {/from yyyy-MM-dd /to yyyy-MM-dd} {tags}
  * This class extends the `Task` class and includes start and end dates for the event.
  */
 public class Event extends Task {
@@ -20,6 +22,12 @@ public class Event extends Task {
      */
     public Event(String name, LocalDate start, LocalDate end) {
         super(name);
+        this.start = start;
+        this.end = end;
+    }
+
+    public Event(String name, LocalDate start, LocalDate end, ArrayList<String> tagList) {
+        super(name, tagList);
         this.start = start;
         this.end = end;
     }

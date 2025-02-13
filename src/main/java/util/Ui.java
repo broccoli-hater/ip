@@ -7,6 +7,7 @@ import task.Task;
  * This class is responsible for reading user input and providing feedback.
  */
 public class Ui {
+
     /**
      * Displays a welcome message to the user.
      */
@@ -161,5 +162,21 @@ public class Ui {
     public static String printEmptyKeyword() {
         return "The keyword field is empty, a void most dire and unacceptable! \n"
                 + "Rectify this error, or face the consequences of thy folly!";
+    }
+
+    public static String printEmptyTag() {
+        return """
+                The tag field is empty, a void most dire and unacceptable!\s
+                Tags must be written in the sacred format: #tag, or they shall be case aside\
+                as unworthy of mine attention!\s
+                """;
+    }
+
+    public static String addTags() {
+        return "Verily, 'tis done! The tags are added, by my command and noble favor!";
+    }
+
+    public static String removeTags() {
+        return "Understood. The tags are no more, vanquished by my command and unyielding strength of will";
     }
 }

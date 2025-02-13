@@ -50,6 +50,9 @@ public class ErrorCommand extends Command {
         case "empty keyword" -> {
             response.append(Ui.printEmptyKeyword());
         }
+        case "empty tag list" -> {
+            response.append(Ui.printEmptyTag());
+        }
         case "invalid time format" -> {
             response.append(Ui.printIncorrectTimeFormat());
         }

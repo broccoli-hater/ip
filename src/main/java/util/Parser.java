@@ -2,6 +2,8 @@ package util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import command.AddCommand;
 import command.Command;
@@ -11,7 +13,9 @@ import command.ExitCommand;
 import command.FindCommand;
 import command.ListCommand;
 import command.MarkCommand;
+import command.TagCommand;
 import command.UnmarkCommand;
+import command.UntagCommand;
 import task.DeadLine;
 import task.Event;
 import task.ToDo;
@@ -34,19 +38,19 @@ public class Parser {
         try {
             switch (command) {
             case "todo" -> {
-                return parseToDo(tokens);
+                return parseToDoCommand(tokens);
             }
             case "deadline" -> {
-                return parseDeadLine(tokens);
+                return parseDeadLineCommand(tokens);
             }
             case "event" -> {
-                return parseEvent(tokens);
+                return parseEventCommand(tokens);
             }
             case "list" -> {
                 return new ListCommand();
             }
             case "delete" -> {
-                return parseDelete(tokens);
+                return parseDeleteCommand(tokens);
             }
             case "mark" -> {
                 return new MarkCommand(Integer.parseInt(tokens[1]) - 1);
@@ -55,7 +59,10 @@ public class Parser {
                 return new UnmarkCommand(Integer.parseInt(tokens[1]) - 1);
             }
             case "find" -> {
-                return parseFind(tokens);
+                return parseFindCommand(tokens);
+            }
+            case "tag", "untag"-> {
+                return parseTagCommand(command, tokens);
             }
             case "bye" -> {
                 return new ExitCommand();
@@ -69,6 +76,152 @@ public class Parser {
         }
     }
 
+    public static int validateIndex(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("invalid index");
+        }
+    }
+
+    private Command parseTagCommand(String command, String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty index");
+        }
+
+        String args = tokens[1].trim(); // {index} {#tag #...}
+        String i = args.substring(0, args.indexOf(" "));
+        int index = validateIndex(i) - 1;
+
+        if (!hasTags(args)) {
+            throw new IllegalArgumentException("empty tag list");
+        }
+
+        ArrayList<String> tagList = parseTags(args);
+
+        if (command.equals("tag")) {
+            return new TagCommand(index, tagList);
+        } else {
+            return new UntagCommand(index, tagList);
+        }
+    }
+
+    public static boolean hasTags(String token) {
+        return token.split("#").length > 1;
+    }
+
+    public static String separateDescriptionFromTags(String token) {
+        return token.split("#")[0];
+    }
+
+    private static String separateTagsFromDescription(String token) {
+        return token.split("#", 2)[1];
+    }
+
+    public static ArrayList<String> parseTags(String args) {
+        args = separateTagsFromDescription(args);
+        String[] tags = args.split("#");
+        Arrays.parallelSetAll(tags, (i) -> tags[i].trim());
+        return new ArrayList<>(Arrays.asList(tags));
+    }
+
+    /**
+     * Parses a ToDo command from the input tokens.
+     *
+     * @param tokens The input tokens containing the ToDo command and its description.
+     * @return An AddCommand for the ToDo task.
+     * @throws IllegalArgumentException If the description is empty.
+     */
+    private AddCommand parseToDoCommand(String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty description");
+        }
+        assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
+
+        String args = tokens[1];
+        if (!hasTags(args)) {
+            return new AddCommand(new ToDo(args));
+        } else {
+            return new AddCommand(new ToDo(separateDescriptionFromTags(args), parseTags(args)));
+        }
+    }
+
+    /**
+     * Parses a DeadLine command from the input tokens.
+     *
+     * @param tokens The input tokens containing the DeadLine command, description, and deadline.
+     * @return An AddCommand for the DeadLine task.
+     * @throws IllegalArgumentException If the description or deadline is empty, or if the deadline format is invalid.
+     */
+    private AddCommand parseDeadLineCommand(String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty description");
+        }
+
+        String args = tokens[1]; // {description} {deadline} {tags}
+        String[] temp = args.split(" /by ", 2);
+        String description = temp[0];
+
+        if (temp.length < 2 || temp[1].isEmpty()) {
+            throw new IllegalArgumentException("empty deadline");
+        }
+
+        String date = separateDescriptionFromTags(temp[1]).trim();
+        LocalDate deadline = verifyDateFormat(date);
+
+        if (!hasTags(args)) {
+            return new AddCommand(new DeadLine(description, deadline));
+        } else {
+            return new AddCommand(new DeadLine(description, deadline, parseTags(args)));
+        }
+    }
+
+    /**
+     * Parses an Event command from the input tokens.
+     *
+     * @param tokens The input tokens containing the Event command, description, start time, and end time.
+     * @return An AddCommand for the Event task.
+     * @throws IllegalArgumentException If the description, start time, or end time is empty,
+     *     or if the time format is invalid.
+     */
+    private AddCommand parseEventCommand(String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty description");
+        }
+        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
+
+        String args = tokens[1]; // {description} {startTime} {endTime} {tags}
+        String[] temp = args.split(" /from ", 2);
+        String description = temp[0];
+
+        if (temp.length < 2 || temp[1].isEmpty()) {
+            throw new IllegalArgumentException("empty start time");
+        }
+        String[] temp1 = temp[1].split(" /to ", 2);
+        if (temp1.length < 2 || temp1[1].isEmpty()) {
+            throw new IllegalArgumentException("empty end time");
+        }
+
+        String startDate = temp1[0].trim();
+        LocalDate startTime = verifyDateFormat(startDate);
+        String endDate = separateDescriptionFromTags(temp1[1]).trim();
+        LocalDate endTime = verifyDateFormat(endDate);
+
+        if (!hasTags(args)) {
+            return new AddCommand(new Event(description, startTime, endTime));
+        } else {
+            return new AddCommand(new Event(description, startTime, endTime, parseTags(args)));
+        }
+    }
+
+    private LocalDate verifyDateFormat(String d) {
+        try {
+            return LocalDate.parse(d);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("invalid time format");
+        }
+    }
+
     /**
      * Parses a Find command from the input tokens.
      *
@@ -76,7 +229,7 @@ public class Parser {
      * @return A FindCommand with the specified keyword.
      * @throws IllegalArgumentException If the keyword field is empty.
      */
-    private FindCommand parseFind(String[] tokens) {
+    private FindCommand parseFindCommand(String[] tokens) {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty keyword");
         }
@@ -91,86 +244,11 @@ public class Parser {
      * @return A DeleteCommand with the specified index.
      * @throws IllegalArgumentException If the index field is empty.
      */
-    private DeleteCommand parseDelete(String[] tokens) {
+    private DeleteCommand parseDeleteCommand(String[] tokens) {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty index");
         }
         assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
         return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
-    }
-
-    /**
-     * Parses a ToDo command from the input tokens.
-     *
-     * @param tokens The input tokens containing the ToDo command and its description.
-     * @return An AddCommand for the ToDo task.
-     * @throws IllegalArgumentException If the description is empty.
-     */
-    private AddCommand parseToDo(String[] tokens) {
-        if (tokens.length == 1) {
-            throw new IllegalArgumentException("empty description");
-        }
-        assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
-        return new AddCommand(new ToDo(tokens[1]));
-    }
-
-    /**
-     * Parses a DeadLine command from the input tokens.
-     *
-     * @param tokens The input tokens containing the DeadLine command, description, and deadline.
-     * @return An AddCommand for the DeadLine task.
-     * @throws IllegalArgumentException If the description or deadline is empty, or if the deadline format is invalid.
-     */
-    private AddCommand parseDeadLine(String[] tokens) {
-        if (tokens.length == 1) {
-            throw new IllegalArgumentException("empty description");
-        }
-        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
-
-        String[] temp = tokens[1].split(" /by ", 2);
-        if (temp.length < 2 || temp[1].isEmpty()) {
-            throw new IllegalArgumentException("empty deadline");
-        }
-
-        LocalDate deadline = verifyDateFormat(temp[1]);
-
-        return new AddCommand(new DeadLine(temp[0], deadline));
-    }
-
-    /**
-     * Parses an Event command from the input tokens.
-     *
-     * @param tokens The input tokens containing the Event command, description, start time, and end time.
-     * @return An AddCommand for the Event task.
-     * @throws IllegalArgumentException If the description, start time, or end time is empty,
-     *     or if the time format is invalid.
-     */
-    private AddCommand parseEvent(String[] tokens) {
-        if (tokens.length == 1) {
-            throw new IllegalArgumentException("empty description");
-        }
-        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
-
-        String[] temp = tokens[1].split(" /from ", 2);
-        if (temp.length < 2 || temp[1].isEmpty()) {
-            throw new IllegalArgumentException("empty start time");
-        }
-        String[] temp1 = temp[1].split(" /to ", 2);
-        if (temp1.length < 2 || temp1[1].isEmpty()) {
-            throw new IllegalArgumentException("empty end time");
-        }
-
-        LocalDate startTime = verifyDateFormat(temp1[0]);
-        LocalDate endTime = verifyDateFormat(temp1[1]);
-
-        return new AddCommand(new Event(temp[0], startTime, endTime));
-    }
-
-    private LocalDate verifyDateFormat(String d) {
-        try {
-            return LocalDate.parse(d);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("invalid time format");
-        }
     }
 }

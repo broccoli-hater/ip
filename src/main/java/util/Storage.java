@@ -1,7 +1,6 @@
 package util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import task.DeadLine;
 import task.Event;
@@ -61,14 +62,34 @@ public class Storage {
     }
 
     private static Task parseTask(String line) {
-        String[] task = line.split(" ");
-        if (task.length < 3) {
+        String[] task = line.split(" "); //[T][X] {desc} {time tokens} {tags}
+        if (task.length < 2) {
             return null;
         }
 
-        String type = task[0];
-        boolean isCompleted = task[1].equals("[X]");
-        String details = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
+        String firstToken = task[0];
+
+        if (!firstToken.matches("\\[.*\\]\\[.*\\]")) {
+            return null;
+        }
+
+       Pattern pattern = java.util.regex.Pattern.compile("(\\[.*?\\])(\\[.*?\\])");
+       Matcher matcher = pattern.matcher(firstToken);
+
+        String type;
+        String completion;
+
+        if (matcher.find()) {
+            type = matcher.group(1); // Extract [type]
+            completion = matcher.group(2); // Extract [completion]
+            System.out.println("Type: " + type);
+            System.out.println("Completion: " + completion);
+        } else {
+            return null;
+        }
+
+        boolean isCompleted = completion.equals("[X]");
+        String details = String.join(" ", Arrays.copyOfRange(task, 1, task.length));
 
         switch (type) {
         case "[T]" -> {
@@ -88,47 +109,68 @@ public class Storage {
     }
 
     private static Event createEvent(boolean isCompleted, String details) {
-        String[] tokens = details.split(" \\(from: ");
-        if (tokens.length != 2) {
+        String tokens = Parser.separateDescriptionFromTags(details).trim(); //{description} {start} {end}
+
+        String[] temp = tokens.split(" \\(from: ");
+        String description = temp[0].trim();
+        if (temp.length != 2) {
             return null;
         }
-
-        String[] timeTokens = tokens[1].split(" to: ");
+        String[] timeTokens = temp[1].split(" to: ");
         if (timeTokens.length != 2) {
             return null;
         }
 
-        LocalDate startTime = LocalDate.parse(timeTokens[0], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        LocalDate endTime = LocalDate.parse(timeTokens[1].substring(0, timeTokens[1].length() - 1),
+        String startDate = timeTokens[0].trim();
+        LocalDate startTime = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String endDate = timeTokens[1].trim();
+        LocalDate endTime = LocalDate.parse(endDate.substring(0, timeTokens[1].length() - 1),
                 DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        Event event = new Event(tokens[0], startTime, endTime);
+        Event event = new Event(description, startTime, endTime);
 
         if (isCompleted) {
             event.markCompleted();
+        }
+        if (Parser.hasTags(details)) {
+            ArrayList<String> tagList = Parser.parseTags(details);
+            event.addTags(tagList);
         }
         return event;
     }
 
     private static DeadLine createDeadLine(boolean isCompleted, String details) {
-        String[] tokens = details.split(" \\(by: ");
-        if (tokens.length != 2) {
+        String tokens = Parser.separateDescriptionFromTags(details).trim(); //{description} {deadline}
+        String[] temp = tokens.split(" \\(by: ");
+        String description = temp[0];
+        String dateString = temp[1];
+
+        if (temp.length != 2) {
             return null;
         }
 
-        LocalDate date = LocalDate.parse(tokens[1].substring(0, tokens[1].length() - 1),
+        LocalDate date = LocalDate.parse(dateString.substring(0, dateString.length() - 1),
                 DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        DeadLine deadLine = new DeadLine(tokens[0], date);
+        DeadLine deadLine = new DeadLine(description, date);
 
         if (isCompleted) {
             deadLine.markCompleted();
+        }
+        if (Parser.hasTags(details)) {
+            ArrayList<String> tagList = Parser.parseTags(details);
+            deadLine.addTags(tagList);
         }
         return deadLine;
     }
 
     private static ToDo createToDo(boolean isCompleted, String details) {
-        ToDo toDo = new ToDo(details);
+        String description = Parser.separateDescriptionFromTags(details);
+        ToDo toDo = new ToDo(description);
         if (isCompleted) {
             toDo.markCompleted();
+        }
+        if (Parser.hasTags(details)) {
+            ArrayList<String> tagList = Parser.parseTags(details);
+            toDo.addTags(tagList);
         }
         return toDo;
     }
@@ -150,9 +192,12 @@ public class Storage {
 
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < taskList.size(); i++) {
-                Task task = taskList.get(i);
-                String type = task.getType();
-                fw.write(type + " " + task.isComplete() + " " + task.getName() + " " + task.getTiming() + "\n");
+//                Task task = taskList.get(i);
+//                String type = task.getType();
+//                fw.write(type + " " + task.isComplete() + " " + task.getName()
+//                        + " " + task.getTiming() + " " + task.getTags() + "\n");
+
+                fw.write(taskList.get(i).toString() + "\n");
             }
             fw.close();
 

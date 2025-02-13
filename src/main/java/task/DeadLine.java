@@ -2,9 +2,11 @@ package task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * A task with a specific deadline.
+ * In the form: deadline {description} {/by yyyy-MM-dd} {tags}
  * This class extends the `Task` class and includes a deadline date.
  */
 public class DeadLine extends Task {
@@ -18,6 +20,11 @@ public class DeadLine extends Task {
      */
     public DeadLine(String name, LocalDate deadLine) {
         super(name);
+        this.deadLine = deadLine;
+    }
+
+    public DeadLine(String name, LocalDate deadLine, ArrayList<String> tagList) {
+        super(name, tagList);
         this.deadLine = deadLine;
     }
 
