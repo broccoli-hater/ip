@@ -15,6 +15,7 @@ import command.ListCommand;
 import command.MarkCommand;
 import command.TagCommand;
 import command.UnmarkCommand;
+import command.UntagCommand;
 import task.DeadLine;
 import task.Event;
 import task.ToDo;
@@ -60,8 +61,8 @@ public class Parser {
             case "find" -> {
                 return parseFindCommand(tokens);
             }
-            case "tag" -> {
-                return parseTagCommand(tokens);
+            case "tag", "untag"-> {
+                return parseTagCommand(command, tokens);
             }
             case "bye" -> {
                 return new ExitCommand();
@@ -83,7 +84,7 @@ public class Parser {
         }
     }
 
-    private TagCommand parseTagCommand(String[] tokens) {
+    private Command parseTagCommand(String command, String[] tokens) {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty index");
         }
@@ -98,7 +99,11 @@ public class Parser {
 
         ArrayList<String> tagList = parseTags(args);
 
-        return new TagCommand(index, tagList);
+        if (command.equals("tag")) {
+            return new TagCommand(index, tagList);
+        } else {
+            return new UntagCommand(index, tagList);
+        }
     }
 
     public static boolean hasTags(String token) {

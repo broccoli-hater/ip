@@ -43,12 +43,14 @@ public class Task {
         }
     }
 
-    public void tag(String tag) {
+    private void tag(String tag) {
         tags.add(tag);
     }
 
-    public void untag(String tag) {
-        tags.remove(tag);
+    public void removeTags(ArrayList<String> tagList) {
+        for (String t : tagList) {
+            tags.remove(t);
+        }
     }
 
     /**

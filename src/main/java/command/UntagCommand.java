@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * A command to add a tag to a task in the task list.
  * In the form: tag {index} {#tag}
  */
-public class TagCommand extends Command {
+public class UntagCommand extends Command {
     private final int index;
     private final ArrayList<String> tagList;
     private final StringBuilder response = new StringBuilder();
@@ -21,7 +21,7 @@ public class TagCommand extends Command {
      *
      * @param index The index of the task to which the tag is to be added.
      */
-    public TagCommand(int index, ArrayList<String> tagList) {
+    public UntagCommand(int index, ArrayList<String> tagList) {
         this.index = index;
         this.tagList = tagList;
     }
@@ -35,11 +35,11 @@ public class TagCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        response.append(Ui.addTags());
+        response.append(Ui.removeTags());
         response.append("\n");
 
         Task newTask = taskList.get(index);
-        newTask.addTags(tagList);
+        newTask.removeTags(tagList);
         taskList.set(index, newTask);
         storage.saveData(taskList);
 
