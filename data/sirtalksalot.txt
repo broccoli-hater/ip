@@ -1,4 +1,4 @@
-[T] [-] dljfdskjlkljdffds      #ling #long 
-[D] [-] dfsdf (by: 09/09/2020)  #bing #bong 
-[D] [-] dfsdfsd (by: 09/09/2030)  #ding #dong 
-[E] [-] dfsf (from: 09/09/2020 to: 09/10/2020)  #ring #ding #dong 
+[D][-] dfsdf (by: 09/09/2020)  #bing #bong 
+[D][X] dfsdfsd (by: 09/09/2030)  #ding #dong 
+[E][-] dfsf (from: 09/09/2020 to: 09/10/2020)  #ring #ding #dong 
+[T][X] dfdsf     #ling #long 

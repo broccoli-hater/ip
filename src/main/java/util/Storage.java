@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import task.DeadLine;
 import task.Event;
@@ -60,14 +62,34 @@ public class Storage {
     }
 
     private static Task parseTask(String line) {
-        String[] task = line.split(" ");
-        if (task.length < 3) {
+        String[] task = line.split(" "); //[T][X] {desc} {time tokens} {tags}
+        if (task.length < 2) {
             return null;
         }
 
-        String type = task[0];
-        boolean isCompleted = task[1].equals("[X]");
-        String details = String.join(" ", Arrays.copyOfRange(task, 2, task.length));
+        String firstToken = task[0];
+
+        if (!firstToken.matches("\\[.*\\]\\[.*\\]")) {
+            return null;
+        }
+
+       Pattern pattern = java.util.regex.Pattern.compile("(\\[.*?\\])(\\[.*?\\])");
+       Matcher matcher = pattern.matcher(firstToken);
+
+        String type;
+        String completion;
+
+        if (matcher.find()) {
+            type = matcher.group(1); // Extract [type]
+            completion = matcher.group(2); // Extract [completion]
+            System.out.println("Type: " + type);
+            System.out.println("Completion: " + completion);
+        } else {
+            return null;
+        }
+
+        boolean isCompleted = completion.equals("[X]");
+        String details = String.join(" ", Arrays.copyOfRange(task, 1, task.length));
 
         switch (type) {
         case "[T]" -> {
@@ -170,10 +192,12 @@ public class Storage {
 
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < taskList.size(); i++) {
-                Task task = taskList.get(i);
-                String type = task.getType();
-                fw.write(type + " " + task.isComplete() + " " + task.getName()
-                        + " " + task.getTiming() + " " + task.getTags() + "\n");
+//                Task task = taskList.get(i);
+//                String type = task.getType();
+//                fw.write(type + " " + task.isComplete() + " " + task.getName()
+//                        + " " + task.getTiming() + " " + task.getTags() + "\n");
+
+                fw.write(taskList.get(i).toString() + "\n");
             }
             fw.close();
 
