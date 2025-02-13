@@ -2,6 +2,8 @@ package util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import command.AddCommand;
 import command.Command;
@@ -99,6 +101,24 @@ public class Parser {
         return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
     }
 
+    public static boolean hasTags(String token) {
+        return token.split("#").length > 1;
+    }
+
+    public static String separateFromTags(String token) {
+        return token.split("#")[0];
+    }
+
+    public static String separateTagsFromDescription(String token) {
+        return token.split("#", 2)[1];
+    }
+
+    public static ArrayList<String> parseTags(String args) {
+        args = separateTagsFromDescription(args);
+        String[] tags = args.split("#");
+        return new ArrayList<>(Arrays.asList(tags));
+    }
+
     /**
      * Parses a ToDo command from the input tokens.
      *
@@ -111,7 +131,13 @@ public class Parser {
             throw new IllegalArgumentException("empty description");
         }
         assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
-        return new AddCommand(new ToDo(tokens[1]));
+
+        String args = tokens[1];
+        if (!hasTags(args)) {
+            return new AddCommand(new ToDo(args));
+        } else {
+            return new AddCommand(new ToDo(separateFromTags(args), parseTags(args)));
+        }
     }
 
     /**
@@ -125,16 +151,23 @@ public class Parser {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty description");
         }
-        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
 
-        String[] temp = tokens[1].split(" /by ", 2);
+        String args = tokens[1]; // {description} {deadline} {tags}
+        String[] temp = args.split(" /by ", 2);
+        String description = temp[0];
+
         if (temp.length < 2 || temp[1].isEmpty()) {
             throw new IllegalArgumentException("empty deadline");
         }
 
-        LocalDate deadline = verifyDateFormat(temp[1]);
+        String date = separateFromTags(temp[1]).trim();
+        LocalDate deadline = verifyDateFormat(date);
 
-        return new AddCommand(new DeadLine(temp[0], deadline));
+        if (!hasTags(args)) {
+            return new AddCommand(new DeadLine(description, deadline));
+        } else {
+            return new AddCommand(new DeadLine(description, deadline, parseTags(args)));
+        }
     }
 
     /**
@@ -151,7 +184,10 @@ public class Parser {
         }
         assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
 
-        String[] temp = tokens[1].split(" /from ", 2);
+        String args = tokens[1]; // {description} {startTime} {endTime} {tags}
+        String[] temp = args.split(" /from ", 2);
+        String description = temp[0];
+
         if (temp.length < 2 || temp[1].isEmpty()) {
             throw new IllegalArgumentException("empty start time");
         }
@@ -160,10 +196,16 @@ public class Parser {
             throw new IllegalArgumentException("empty end time");
         }
 
-        LocalDate startTime = verifyDateFormat(temp1[0]);
-        LocalDate endTime = verifyDateFormat(temp1[1]);
+        String startDate = temp1[0].trim();
+        LocalDate startTime = verifyDateFormat(startDate);
+        String endDate = separateFromTags(temp1[1]).trim();
+        LocalDate endTime = verifyDateFormat(endDate);
 
-        return new AddCommand(new Event(temp[0], startTime, endTime));
+        if (!hasTags(args)) {
+            return new AddCommand(new Event(description, startTime, endTime));
+        } else {
+            return new AddCommand(new Event(description, startTime, endTime, parseTags(args)));
+        }
     }
 
     private LocalDate verifyDateFormat(String d) {
