@@ -148,4 +148,18 @@ public class Ui {
     public static String printIncorrectTimeFormat() {
         return "The chronicles of time must be inscribed in the noble and proper manner: yyyy-mm-dd!";
     }
+
+    public static String printIndexNotFound() {
+        return "The index must be stated, for how else would one know on which task to perform your command on?";
+    }
+
+    public static String printNoMatchingTasksFound() {
+        return "Alas, thy search has yielded naught but emptiness! \n"
+                + "Reforge thy query and try again.";
+    }
+
+    public static String printEmptyKeyword() {
+        return "The keyword field is empty, a void most dire and unacceptable! \n"
+                + "Rectify this error, or face the consequences of thy folly!";
+    }
 }

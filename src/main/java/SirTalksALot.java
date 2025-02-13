@@ -30,6 +30,7 @@ public class SirTalksALot {
 
     /**
      * Generates a response for the user's chat message.
+     * The response is based on the user's input and the processed command
      */
     public String getResponse(String input) {
         Command command = parser.parse(input);
@@ -40,6 +41,9 @@ public class SirTalksALot {
         return response;
     }
 
+    /**
+     * Returns the command type according to the user's input.
+     */
     public String getCommandType() {
         return commandType;
     }

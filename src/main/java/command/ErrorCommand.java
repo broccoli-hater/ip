@@ -44,7 +44,13 @@ public class ErrorCommand extends Command {
         case "empty end time" -> {
             response.append(Ui.printEndTimeNotFound());
         }
-        case "invalid deadline" -> {
+        case "empty index" -> {
+            response.append(Ui.printIndexNotFound());
+        }
+        case "empty keyword" -> {
+            response.append(Ui.printEmptyKeyword());
+        }
+        case "invalid time format" -> {
             response.append(Ui.printIncorrectTimeFormat());
         }
         default -> {

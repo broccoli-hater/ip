@@ -37,7 +37,7 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    /** Injects the Duke instance */
+    /** Injects the SirTalksALot instance */
     public void setSirTalksALot(SirTalksALot s) {
         sirTalksALot = s;
     }

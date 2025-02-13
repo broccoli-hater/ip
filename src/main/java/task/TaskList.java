@@ -26,6 +26,7 @@ public class TaskList {
      */
     public TaskList(ArrayList<Task> tasks) {
         this.taskList = tasks;
+        assert !taskList.isEmpty() : "TaskList should not be empty after initialization with tasks";
     }
 
     /**

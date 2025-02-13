@@ -46,7 +46,7 @@ public class Parser {
                 return new ListCommand();
             }
             case "delete" -> {
-                return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
+                return parseDelete(tokens);
             }
             case "mark" -> {
                 return new MarkCommand(Integer.parseInt(tokens[1]) - 1);
@@ -55,7 +55,7 @@ public class Parser {
                 return new UnmarkCommand(Integer.parseInt(tokens[1]) - 1);
             }
             case "find" -> {
-                return new FindCommand(tokens[1]);
+                return parseFind(tokens);
             }
             case "bye" -> {
                 return new ExitCommand();
@@ -70,6 +70,36 @@ public class Parser {
     }
 
     /**
+     * Parses a Find command from the input tokens.
+     *
+     * @param tokens The input tokens containing the Find command and keyword.
+     * @return A FindCommand with the specified keyword.
+     * @throws IllegalArgumentException If the keyword field is empty.
+     */
+    private FindCommand parseFind(String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty keyword");
+        }
+        assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
+        return new FindCommand(tokens[1]);
+    }
+
+    /**
+     * Parses a Delete command from the input tokens.
+     *
+     * @param tokens The input tokens containing the Delete command and an index.
+     * @return A DeleteCommand with the specified index.
+     * @throws IllegalArgumentException If the index field is empty.
+     */
+    private DeleteCommand parseDelete(String[] tokens) {
+        if (tokens.length == 1) {
+            throw new IllegalArgumentException("empty index");
+        }
+        assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
+        return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
+    }
+
+    /**
      * Parses a ToDo command from the input tokens.
      *
      * @param tokens The input tokens containing the ToDo command and its description.
@@ -80,6 +110,7 @@ public class Parser {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty description");
         }
+        assert tokens.length == 2 : "Expected 2 arguments, got " + tokens.length;
         return new AddCommand(new ToDo(tokens[1]));
     }
 
@@ -94,6 +125,8 @@ public class Parser {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty description");
         }
+        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
+
         String[] temp = tokens[1].split(" /by ", 2);
         if (temp.length < 2 || temp[1].isEmpty()) {
             throw new IllegalArgumentException("empty deadline");
@@ -116,6 +149,8 @@ public class Parser {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty description");
         }
+        assert tokens.length > 1 : "Expected more than 1 argument, got " + tokens.length;
+
         String[] temp = tokens[1].split(" /from ", 2);
         if (temp.length < 2 || temp[1].isEmpty()) {
             throw new IllegalArgumentException("empty start time");
@@ -135,7 +170,7 @@ public class Parser {
         try {
             return LocalDate.parse(d);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("invalid deadline");
+            throw new IllegalArgumentException("invalid time format");
         }
     }
 }
