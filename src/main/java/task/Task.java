@@ -32,7 +32,7 @@ public class Task {
     public String getTags() {
         StringBuilder tagList = new StringBuilder();
         for (String tag : tags) {
-            tagList.append("#").append(tag);
+            tagList.append("#").append(tag).append(" ");
         }
         return tagList.toString();
     }

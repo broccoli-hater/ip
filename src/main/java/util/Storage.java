@@ -87,7 +87,7 @@ public class Storage {
     }
 
     private static Event createEvent(boolean isCompleted, String details) {
-        String tokens = Parser.separateFromTags(details).trim(); //{description} {start} {end}
+        String tokens = Parser.separateDescriptionFromTags(details).trim(); //{description} {start} {end}
 
         String[] temp = tokens.split(" \\(from: ");
         String description = temp[0].trim();
@@ -117,7 +117,7 @@ public class Storage {
     }
 
     private static DeadLine createDeadLine(boolean isCompleted, String details) {
-        String tokens = Parser.separateFromTags(details).trim(); //{description} {deadline}
+        String tokens = Parser.separateDescriptionFromTags(details).trim(); //{description} {deadline}
         String[] temp = tokens.split(" \\(by: ");
         String description = temp[0];
         String dateString = temp[1];
@@ -141,7 +141,7 @@ public class Storage {
     }
 
     private static ToDo createToDo(boolean isCompleted, String details) {
-        String description = Parser.separateFromTags(details);
+        String description = Parser.separateDescriptionFromTags(details);
         ToDo toDo = new ToDo(description);
         if (isCompleted) {
             toDo.markCompleted();

@@ -162,4 +162,17 @@ public class Ui {
         return "The keyword field is empty, a void most dire and unacceptable! \n"
                 + "Rectify this error, or face the consequences of thy folly!";
     }
+
+    public static String printEmptyTag() {
+        return """
+                The tag field is empty, a void most dire and unacceptable!\s
+                Tags must be written in the sacred format: #tag, or they shall be case aside\
+                as unworthy of mine attention!\s
+                """;
+    }
+
+
+    public static String addTag() {
+        return "Verily, 'tis done! The tags are added, by my command and noble favor! \n";
+    }
 }

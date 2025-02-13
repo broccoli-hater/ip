@@ -90,16 +90,8 @@ public class TaskList {
         return matchList;
     }
 
-    /**
-     * Prints all tasks in the task list with their corresponding indices.
-     */
-    public void print() {
-        int counter = 1;
-        for (Task task : taskList) {
-            System.out.print(counter + ". ");
-            System.out.println(task.toString());
-            counter++;
-        }
+    public void set(int index, Task task) {
+        taskList.set(index, task);
     }
 
     /**
