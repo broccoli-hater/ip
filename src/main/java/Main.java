@@ -18,7 +18,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
 
             stage.setMinHeight(220);
-            stage.setMinWidth(800);
+            stage.setMinWidth(500);
             stage.setTitle("Sir Talks-A-Lot");
 
             stage.setScene(scene);
