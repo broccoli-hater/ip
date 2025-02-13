@@ -142,7 +142,7 @@ public class Parser {
         if (!hasTags(args)) {
             return new AddCommand(new ToDo(args));
         } else {
-            return new AddCommand(new ToDo(separateDescriptionFromTags(args), parseTags(args)));
+            return new AddCommand(new ToDo(separateDescriptionFromTags(args).trim(), parseTags(args)));
         }
     }
 

@@ -71,23 +71,23 @@ public class Task {
     }
 
     public String getDeadLine() {
-        return "";
+        return null;
     }
 
     public String getStart() {
-        return "";
+        return null;
     }
 
     public String getEnd() {
-        return "";
+        return null;
     }
 
     public String getType() {
-        return "[ ]";
+        return null;
     }
 
     public String getTiming() {
-        return "";
+        return null;
     }
 
     /**
@@ -98,5 +98,6 @@ public class Task {
     public String toString() {
         return this.getType() + this.isComplete() + " " + this.getName()
                 + " " + this.getTiming() + " " + this.getTags();
+
     }
 }

@@ -163,7 +163,7 @@ public class Storage {
     }
 
     private static ToDo createToDo(boolean isCompleted, String details) {
-        String description = Parser.separateDescriptionFromTags(details);
+        String description = Parser.separateDescriptionFromTags(details).trim();
         ToDo toDo = new ToDo(description);
         if (isCompleted) {
             toDo.markCompleted();
@@ -192,11 +192,6 @@ public class Storage {
 
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < taskList.size(); i++) {
-//                Task task = taskList.get(i);
-//                String type = task.getType();
-//                fw.write(type + " " + task.isComplete() + " " + task.getName()
-//                        + " " + task.getTiming() + " " + task.getTags() + "\n");
-
                 fw.write(taskList.get(i).toString() + "\n");
             }
             fw.close();
