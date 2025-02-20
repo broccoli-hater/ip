@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ToDoTest {
     @Test
-    public void getType_success() {
+    public void testGetType_success() {
         assertEquals("[T]", new ToDo("test").getType());
     }
 }

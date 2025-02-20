@@ -34,7 +34,7 @@ public class Task {
         for (String tag : tags) {
             tagList.append("#").append(tag).append(" ");
         }
-        return tagList.toString();
+        return tagList.toString().trim();
     }
 
     public void addTags(ArrayList<String> tagList) {
