@@ -26,6 +26,15 @@ public class Event extends Task {
         this.end = end;
     }
 
+    /**
+     * Constructs an Event task with the specified name, start date, end date,
+     * and a list of tags.
+     *
+     * @param name  The name or description of the task.
+     * @param start The start date of the event.
+     * @param end   The end date of the event.
+     * @param tagList The list of tags.
+     */
     public Event(String name, LocalDate start, LocalDate end, ArrayList<String> tagList) {
         super(name, tagList);
         this.start = start;

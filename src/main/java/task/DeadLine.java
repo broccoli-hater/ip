@@ -23,6 +23,14 @@ public class DeadLine extends Task {
         this.deadLine = deadLine;
     }
 
+    /**
+     * Constructs a DeadLine task with the specified name, deadline,
+     * and a list of tags.
+     *
+     * @param name  The name or description of the task.
+     * @param deadLine The deadline date of the task.
+     * @param tagList The list of tags.
+     */
     public DeadLine(String name, LocalDate deadLine, ArrayList<String> tagList) {
         super(name, tagList);
         this.deadLine = deadLine;

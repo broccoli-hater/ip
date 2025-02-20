@@ -76,6 +76,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Validates and converts the input string into an integer index.
+     * If the input is not a valid integer, an IllegalArgumentException is thrown.
+     *
+     * @param input The string input to be validated and converted to an integer.
+     * @return The integer value of the input.
+     * @throws IllegalArgumentException If the input is not a valid integer.
+     */
     public static Integer validateIndex(String input) {
         try {
             return Integer.parseInt(input);
@@ -84,6 +92,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a tag or untag command from the user input.
+     * Validates the input format, extracts the index, and parses the tags.
+     *
+     * @param command The command type ("tag" or "untag").
+     * @param tokens The token array from the user input.
+     * @return A Command object (TagCommand or UntagCommand) based on the input.
+     * @throws IllegalArgumentException If the index is missing, invalid, or if the tag list is empty.
+     */
     private Command parseTagCommand(String command, String[] tokens) {
         if (tokens.length == 1) {
             throw new IllegalArgumentException("empty index");
@@ -111,18 +128,46 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks if the input string contains any tags.
+     * Tags are identified by the presence of the '#' character.
+     *
+     * @param token The input string to check for tags.
+     * @return True if the input contains tags, false otherwise.
+     */
     public static boolean hasTags(String token) {
         return token.split("#").length > 1;
     }
 
+    /**
+     * Separates the task description from the tags in the input string.
+     * The description is the part of the string before the first '#' character.
+     *
+     * @param token The input string containing the description and tags.
+     * @return The task description without any tags.
+     */
     public static String separateDescriptionFromTags(String token) {
         return token.split("#")[0];
     }
 
+    /**
+     * Separates the tags from the task description in the input string.
+     * The tags are the part of the string after the first '#' character.
+     *
+     * @param token The input string containing the description and tags.
+     * @return The tags without the task description.
+     */
     private static String separateTagsFromDescription(String token) {
         return token.split("#", 2)[1];
     }
 
+    /**
+     * Parses the tags from the input string and returns them as a list.
+     * Tags are identified by the '#' character and are trimmed of any leading or trailing spaces.
+     *
+     * @param args The input string containing the tags.
+     * @return An ArrayList of tags.
+     */
     public static ArrayList<String> parseTags(String args) {
         args = separateTagsFromDescription(args);
         String[] tags = args.split("#");

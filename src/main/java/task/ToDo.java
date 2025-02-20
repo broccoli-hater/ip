@@ -17,6 +17,12 @@ public class ToDo extends Task {
         super(name);
     }
 
+    /**
+     * Constructs a ToDo task with the specified name and a list of tags.
+     *
+     * @param name The name or description of the task.
+     * @param tagList The list of tags.
+     */
     public ToDo(String name, ArrayList<String> tagList) {
         super(name, tagList);
     }
