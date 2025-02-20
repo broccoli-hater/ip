@@ -150,20 +150,32 @@ public class Ui {
         return "The chronicles of time must be inscribed in the noble and proper manner: yyyy-mm-dd!";
     }
 
+    /**
+     * Informs the user that the index is not found.
+     */
     public static String printIndexNotFound() {
         return "The index must be stated, for how else would one know on which task to perform your command on?";
     }
 
+    /**
+     * Informs the user that no matching tasks are found.
+     */
     public static String printNoMatchingTasksFound() {
         return "Alas, thy search has yielded naught but emptiness! \n"
                 + "Reforge thy query and try again.";
     }
 
+    /**
+     * Informs the user that the keyword field is empty.
+     */
     public static String printEmptyKeyword() {
         return "The keyword field is empty, a void most dire and unacceptable! \n"
                 + "Rectify this error, or face the consequences of thy folly!";
     }
 
+    /**
+     * Informs the user that the tag fields are empty.
+     */
     public static String printEmptyTag() {
         return """
                 The tag field is empty, a void most dire and unacceptable!\s
@@ -172,14 +184,23 @@ public class Ui {
                 """;
     }
 
+    /**
+     * Informs the user that the specified tags have been added.
+     */
     public static String addTags() {
         return "Verily, 'tis done! The tags are added, by my command and noble favor!";
     }
 
+    /**
+     * Informs the user that the specified tags have been removed.
+     */
     public static String removeTags() {
-        return "Understood. The tags are no more, vanquished by my command and unyielding strength of will";
+        return "Understood. The tags are no more, vanquished by my command and unyielding strength of will!";
     }
 
+    /**
+     * Informs the user that the index is invalid.
+     */
     public static String printInvalidIndex() {
         return "The index thou dost seek to wield must be a positive integer, "
                 + "and it must correspond to a task within the sacred scroll of thy task list.";

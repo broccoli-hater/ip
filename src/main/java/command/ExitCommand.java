@@ -22,6 +22,7 @@ public class ExitCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         storage.saveData(taskList);
         response.append(Ui.sayBye());
+        System.exit(0);
     }
 
     @Override

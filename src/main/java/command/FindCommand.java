@@ -10,7 +10,7 @@ import util.Ui;
  * from the task list and printing them out.
  */
 public class FindCommand extends Command {
-    private String keyword;
+    private final String keyword;
     private final StringBuilder response = new StringBuilder();
 
     /**

@@ -61,6 +61,7 @@ public class DialogBox extends HBox {
 
     /**
      * Change the dialog box style according to the command type
+     *
      * @param commandType The command type that the change is based on
      */
     private void changeDialogStyle(String commandType) {
