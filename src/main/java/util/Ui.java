@@ -179,4 +179,9 @@ public class Ui {
     public static String removeTags() {
         return "Understood. The tags are no more, vanquished by my command and unyielding strength of will";
     }
+
+    public static String printInvalidIndex() {
+        return "The index thou dost seek to wield must be a positive integer, "
+                + "and it must correspond to a task within the sacred scroll of thy task list.";
+    }
 }

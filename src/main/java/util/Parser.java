@@ -76,7 +76,7 @@ public class Parser {
         }
     }
 
-    public static int validateIndex(String input) {
+    public static Integer validateIndex(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -90,10 +90,15 @@ public class Parser {
         }
 
         String args = tokens[1].trim(); // {index} {#tag #...}
+
+        if (args.split(" ").length == 1) {
+            throw new IllegalArgumentException("invalid index");
+        }
+
         String i = args.substring(0, args.indexOf(" "));
         int index = validateIndex(i) - 1;
 
-        if (!hasTags(args)) {
+        if (!hasTags(args) || args.split(" ").length < 2) {
             throw new IllegalArgumentException("empty tag list");
         }
 

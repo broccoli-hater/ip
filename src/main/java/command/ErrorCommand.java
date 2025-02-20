@@ -56,6 +56,9 @@ public class ErrorCommand extends Command {
         case "invalid time format" -> {
             response.append(Ui.printIncorrectTimeFormat());
         }
+        case "invalid index" -> {
+            response.append(Ui.printInvalidIndex());
+        }
         default -> {
             response.append(Ui.promptAgain());
         }

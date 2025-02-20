@@ -82,8 +82,6 @@ public class Storage {
         if (matcher.find()) {
             type = matcher.group(1); // Extract [type]
             completion = matcher.group(2); // Extract [completion]
-            System.out.println("Type: " + type);
-            System.out.println("Completion: " + completion);
         } else {
             return null;
         }
