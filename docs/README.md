@@ -205,7 +205,7 @@ Understood. The tags are no more, vanquished by my command and unyielding streng
 ```
 
 
-# Exiting the Program
+## Exiting the Program
 When you are done managing your task, Sir Talks-A-Lot allows you to take your leave with grace and dignity.
 
 ### Usage
