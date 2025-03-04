@@ -1,13 +1,12 @@
+import java.util.Objects;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import util.Ui;
-
-import java.util.Objects;
 
 /**
  * Controller for the main GUI.
@@ -27,6 +26,9 @@ public class MainWindow extends AnchorPane {
     private final Image knightImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
             "/images/knight.jpg")));
 
+    /**
+     * Initializes the controller after the FXML file has been loaded and displays a greeting message.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -43,7 +45,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing the reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML

@@ -31,7 +31,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public String getResponse(){
+    public String getResponse() {
         return response.toString();
     }
 }

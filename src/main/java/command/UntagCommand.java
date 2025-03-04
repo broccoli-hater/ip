@@ -1,11 +1,11 @@
 package command;
 
+import java.util.ArrayList;
+
 import task.Task;
 import task.TaskList;
 import util.Storage;
 import util.Ui;
-
-import java.util.ArrayList;
 
 /**
  * A command to add a tag to a task in the task list.
@@ -47,7 +47,7 @@ public class UntagCommand extends Command {
     }
 
     @Override
-    public String getResponse(){
+    public String getResponse() {
         return response.toString();
     }
 }

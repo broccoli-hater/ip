@@ -3,14 +3,14 @@ package task;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import command.TagCommand;
 import util.Storage;
 import util.StorageStub;
 import util.Ui;
-
-import java.util.ArrayList;
 
 public class TagCommandTest {
 
@@ -68,8 +68,8 @@ public class TagCommandTest {
         tagCommand.execute(taskList, ui, storage);
         String response = tagCommand.getResponse();
 
-        String expectedResponse = "Verily, 'tis done! The tags are added, by my command and noble favor!\n" +
-                "[T][-] bing bong #urgent";
+        String expectedResponse = "Verily, 'tis done! The tags are added, by my command and noble favor!\n"
+                + "[T][-] bing bong #urgent";
         assertEquals(expectedResponse, response);
     }
 }

@@ -16,7 +16,7 @@ public class MarkCommandTest {
     @Test
     public void testExecute_success() {
         StorageStub storageStub = new StorageStub("test/test");
-        TaskList taskList = new TaskList(storageStub.loadData());
+        TaskList taskList = new TaskList();
 
         AddCommand addCommand = new AddCommand(new ToDo("bing bong"));
         addCommand.execute(taskList, new Ui(), storageStub);
@@ -32,7 +32,7 @@ public class MarkCommandTest {
     @Test
     public void testExecute_indexOutOfBounds_exceptionThrown() {
         StorageStub storageStub = new StorageStub("test/test");
-        TaskList taskList = new TaskList(storageStub.loadData());
+        TaskList taskList = new TaskList();
 
         AddCommand addCommand = new AddCommand(new ToDo("bing bong"));
         addCommand.execute(taskList, new Ui(), storageStub);

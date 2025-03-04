@@ -73,8 +73,8 @@ public class Storage {
             return null;
         }
 
-       Pattern pattern = java.util.regex.Pattern.compile("(\\[.*?\\])(\\[.*?\\])");
-       Matcher matcher = pattern.matcher(firstToken);
+        Pattern pattern = java.util.regex.Pattern.compile("(\\[.*?\\])(\\[.*?\\])");
+        Matcher matcher = pattern.matcher(firstToken);
 
         String type;
         String completion;

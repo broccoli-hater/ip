@@ -44,7 +44,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public String getResponse(){
+    public String getResponse() {
         return response.toString();
     }
 }

@@ -21,7 +21,7 @@ public class AddCommandTest {
     @Test
     public void testExecute_success() {
         StorageStub storageStub = new StorageStub("test/test");
-        TaskList taskList = new TaskList(storageStub.loadData());
+        TaskList taskList = new TaskList();
 
         AddCommand addCommand = new AddCommand(new ToDo("bing bong"));
         addCommand.execute(taskList, new Ui(), storageStub);
@@ -29,8 +29,8 @@ public class AddCommandTest {
                 "ding dong", LocalDate.parse("2025-09-09")));
         addCommand1.execute(taskList, new Ui(), storageStub);
 
-        String expected = "1. [T][-] bing bong "
-                + "2. [D][-] ding dong (by: 09/09/2025) ";
+        String expected = "1. [T][-] bing bong \n"
+                + "2. [D][-] ding dong (by: 09/09/2025) \n";
 
         assertEquals(expected, taskList.toString());
     }
@@ -38,7 +38,7 @@ public class AddCommandTest {
     @Test
     public void testExecute_fail() {
         StorageStub storageStub = new StorageStub("test/test");
-        TaskList taskList = new TaskList(storageStub.loadData());
+        TaskList taskList = new TaskList();
 
         AddCommand addCommand = new AddCommand(new ToDo("bing bong"));
         addCommand.execute(taskList, new Ui(), storageStub);
@@ -46,8 +46,8 @@ public class AddCommandTest {
                 LocalDate.parse("2025-09-09"), LocalDate.parse("2025-09-10")));
         addCommand1.execute(taskList, new Ui(), storageStub);
 
-        String expected = "1. [T][-] bing bong "
-                + "2. [D][-] ding dong (by: 09/09/2025) ";
+        String expected = "1. [T][-] bing bong"
+                + "2. [D][-] ding dong (by: 09/09/2025)";
 
         assertNotEquals(expected, taskList.toString());
     }

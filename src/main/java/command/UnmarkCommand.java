@@ -43,7 +43,7 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public String getResponse(){
+    public String getResponse() {
         return response.toString();
     }
 }

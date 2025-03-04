@@ -2,9 +2,9 @@ package task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * A test class for the ToDo class.
